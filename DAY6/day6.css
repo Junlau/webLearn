@@ -1,0 +1,73 @@
+/*清除标签默认边距*/
+* {
+    margin: 0;
+    padding: 0;
+}
+/* class 选择器，经常用到，以 . 开头*/
+.title {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.line {
+    height: 1px;
+    background-color: gray;
+    margin-bottom: 2px;
+}
+
+/* 伪选择器 */
+div > span {
+    font-size: 20px;
+    color:white;
+    margin-right: 20px;
+    line-height: 40px;
+}
+
+div :first-child {
+    margin-left: 15px;
+}
+
+div :last-child {
+    margin-left: 15px;
+}
+/* id选择器，以 # 号开头，一个 HTML 中只能有一个*/
+#nav-box {
+    white-space: nowrap;
+    background-color: #0077ff;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+#button {
+    height: 40px;
+    line-height: 40px;
+    background-color: #0077ff;
+    border-radius: 4px;
+    color: white;
+    margin: 100px auto;
+    width: 200px;
+    text-align: center;
+}
+
+#d {
+    color: red;
+}
+
+/*选择器就是我如何找到页面上元素的方式，用的最多的id是唯一表示符，class是一类标识符，其余还有一些工具符*/
+/*CSS的选择器分三种, 标签选择器, 类选择器, id选择器, 选择器应该决定了在写CSS时前面用 * , 具体标签, . 和#吧， class对应.，id对应#，*则是所有标签*/
+
+/* 默认值。内容不会被修剪，会呈现在元素框之外 
+overflow: visible;
+
+内容会被修剪，并且其余内容不可见 
+overflow: hidden;
+
+内容会被修剪，浏览器会显示滚动条以便查看其余内容 
+overflow: scroll;
+
+由浏览器定夺，如果内容被修剪，就会显示滚动条（默认值） 
+overflow: auto;
+
+规定从父元素继承overflow属性的值 
+overflow: inherit;*/
