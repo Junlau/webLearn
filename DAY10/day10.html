@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Position学习</title>
+    <style>
+        body {
+            width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        p {
+            border: 3px solid blue;
+            background: aqua;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        span {
+            background: red;
+            border: 2px solid black;
+        }
+
+        .positioned {
+            background-color: yellow;
+            /*absolute绝对,relative相对,fix：它的作用就是把某个元素固定到某个位置,
+            sticky：它的作用是在某个位置固定某个元素的位置*/
+            position: relative;
+            top: 50px;
+        }
+
+        .cell {
+            text-align: left;
+            position: relative;
+            border: 2px solid black;
+        }
+
+        .icon {
+            background-color: aquamarine;
+            width: 80px;
+            height: 80px;
+            position: relative;
+            top: 20px;
+            left: 20px;
+        }
+        .title {
+            background-color: bisque;
+            position: relative;
+            top: -50px;
+            left: 120px;
+            width: 50%;
+        }
+        .des {
+            background-color: palegreen;
+            width: 50%;
+
+            position: relative;
+            top: -40px;
+            left: 120px;
+        }
+        .time {
+            background-color: blue;
+            width: 40px;
+            position: absolute;
+            top: 30px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+            <h1>web布局方式</h1>
+            <p>我是一个 p 标签</p>
+            <p class="positioned">我也是一个 p 标签</p>
+            <p>我还是一个 p 标签</p>
+            <p>我是 p <span>我是 span 标签</span>and <span>我是 span 标签</span></p>
+    </div>
+    <div class="cell">
+        <div class="icon"></div>
+        <div class="title">File Transfer</div>
+        <div class="des">position布局</div>
+        <div class="time">10:00</div>
+    </div>
+</body>
+</html>
