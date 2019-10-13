@@ -1,0 +1,150 @@
+body {
+    margin: 0px;
+}
+
+.header {
+    height: 80px;
+    border-bottom: 1px solid #eeeeee;
+    position: fixed;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    top: 0px;
+    z-index: 9;
+}
+
+.header:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.container {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    height: 40px;
+    width: 120px;
+    border: 1px solid red;
+    padding: 5px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.feeds {
+    min-height: 1200px;
+    padding: 0px;
+}
+
+ul.feeds > li {
+    display: block;
+    border-bottom: 1px dashed #eeeeee;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 100px;
+    position: relative;
+}
+
+.headerImage {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.content {
+    color: #333333;
+}
+
+.left {
+    float: left;
+    /* ???表示涵义 */
+}
+
+.right {
+    float: right;
+    height: 80px;
+}
+
+.clearfix {
+    clear: both;
+    /* 作用是什么？ */
+}
+
+.logo {
+    font-size: 36px;
+    color: #18bc9c;
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
+.menu {
+    padding: 0px;
+    margin: 0px;
+    margin-right: 40px;
+    margin-top: 40px;
+    height: 80px;
+}
+
+.menu li {
+    display: inline;
+    font-size: 20px;
+    
+}
+
+.menu li:not(:last-child) {
+    margin-right: 10px;
+}
+
+
+a {
+    text-decoration: none;
+    /* 涵义？ */
+}
+
+a:link {
+    color: #18bc9c;
+}
+
+a:hover {
+    color: #118069;
+}
+
+li.active a {
+    border-bottom: 2px solid #18bc9c;
+    padding-bottom: 2px;
+}
+
+.actionbar {
+    font-size: 12px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+    color: gray;
+}
+
+.actionbar .feed-action > li {
+    display: inline;
+    margin-right: 10px;
+     
+}
+
+.feed {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.actionbar .feed-action > li a:link {
+    color: #18bc9c;
+}
+
+/* A B{}:A元素的所有后代元素B都会起作用
+A>B{}:A元素的直接子节点元素B都会起作用
+A+B{}:匹配A元素下一个兄弟节点元素B，兄弟节点意味着平级
+A~B{}:匹配A元素任意一个兄弟节点元素B，兄弟节点意味着平级
+A,B{}:A和B元素具有同一规则的CSS样式 */
