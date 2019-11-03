@@ -1,0 +1,173 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-size: 12px;
+    line-height: 200%;
+    
+}
+
+.header {
+    position: relative;
+    height: 80px;
+}
+
+.titleImage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    margin-left: 20px;
+
+}
+
+.nav {
+    display: inline;
+    position: absolute;
+    right: 20px;
+    height: 80px;
+}
+
+.nav a {
+    font-size: 16px;
+    font-weight: bold;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    display: inline-block;
+    color: #39c;
+}
+
+.nav div {
+    display: inline-block;
+}
+
+.nav a:link {
+    
+    text-decoration: none;
+    text-align: center;
+    
+}
+
+.nav a:hover {
+    color: red;
+    
+}
+
+.banner {
+
+}
+
+.banner > img {
+    width: 100%;
+}
+
+.des {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-image: url(./images/hbg.png);
+    height: 47px;
+}
+
+.des div:nth-child(1) {
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+.des div:nth-child(2) {
+    flex-grow: 1;
+    margin-right: 20px;
+    text-align: right;
+}
+
+.content {
+    background-color: #f6f6f6;
+}
+
+.contents {
+    border: 1px solid #cccccc;
+    margin: 20px 40px 20px 40px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.contentOne {
+    display: flex;
+    flex-direction: row;
+}
+
+.introduce {
+    width: 50%;
+    margin-left: 20px;
+}
+
+.introduce div {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.introduce div:nth-child(1) {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.introduce div:nth-child(3) {
+    font-size: 16px;
+    color: #900;
+}
+
+.introduce div:nth-child(4) {
+    float: right;
+    margin-top: 8px;
+}
+
+.phote {
+    width: 50%;
+    margin-left: 20px;
+}
+
+.phote div {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.phote div:nth-child(1) {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.phote div:nth-child(3) {
+    font-size: 16px;
+    color: #900;
+}
+
+.phote div:nth-child(4) {
+    float: right;
+    margin-top: 8px;
+}
+
+.contentTwo {
+    display: flex;
+    flex-direction: row;
+}
+
+.introduceContent {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+}
+
+.photeContent {
+    width: 50%;
+}
+
+.photeContent div {
+    display: inline-block;
+}
+
