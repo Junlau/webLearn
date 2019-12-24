@@ -15,3 +15,21 @@ let addText = function () {
     let contentDiv = document.getElementById('content');
     contentDiv.appendChild(div);
 }
+
+function test() {
+    var arr = [];
+    for (var i = 0; i < 10; i++) {
+        (function (a){ //立即执行函数
+            arr[a] = function () {
+                console.log(a);
+            }
+        }(i))
+        
+    }
+    return arr;
+}
+
+var myArr = test();
+for (var i = 0; i < 10; i++) {
+    myArr[i]();
+}
