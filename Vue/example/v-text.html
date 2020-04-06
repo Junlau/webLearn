@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>v-text & v-html</title>
+</head>
+<body>
+    <div id="app">
+        <div v-text="message"></div>
+        <div v-html="title"></div>
+    </div>
+    <script type="text/javascript"> 
+        var app = new Vue({
+            el:'#app',
+            data:{
+                message:'v-text-lj',
+                title:'<h2>learn Vue</h2>'
+            }
+        })
+    </script>
+</body>
+</html>
