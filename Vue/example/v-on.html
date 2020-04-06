@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>v-on绑定事件</title>
+</head>
+<body>
+    <h1>v-on绑定事件</h1>
+    <div id="app">
+        本场比赛得分：{{count}} <br>
+        <button v-on:click="add">加分</button>
+        <button v-on:click="sub">减分</button>
+        <button @click="sub">减分</button>
+        <br>
+        <input type="text" v-on:keyup.enter="onEnter" v-model="secondCount">
+    </div>
+
+    <script type="text/javascript" >
+        var app = new Vue({
+            el:'#app',
+            data:{
+                count:1,
+                secondCount:1,
+            },
+            //方法集合
+            methods:{
+                add:function(){
+                    this.count++;
+                },
+                sub:function(){
+                    this.count--;
+                },
+                onEnter:function(){
+                    //this.secondCount由于是输入，所以是string类型
+                    this.count = this.count + parseInt(this.secondCount);
+                }
+            }
+        })
+    </script>
+</body>
+</html>
