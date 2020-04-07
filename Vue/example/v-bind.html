@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>v-bind</title>
+</head>
+<body>
+    <h2>v-bind绑定标签里面的属性</h2>
+    <hr>
+    <div id="app">
+        <p>绑定img里面的src</p>
+        <img v-bind:src="imgSrc" alt="" width="200px">
+        <br>
+        <a :href="webUrl">简写绑定</a>
+        <hr>
+        <h3>绑定CSS样式</h3>
+        <div :class="className">1.绑定one</div>
+        <div :class="{oneClass:isOk}">2.增加判断绑定</div>
+        <input type="checkbox"  v-model="isOk" id="isOk">
+        <label for="isOk">{{isOk}}</label>
+        <hr>
+        <!--需与下面对应-->
+        <div :class="[classA,classB]">3.绑定CSS数组</div>
+        <div :class="isOk?classA:classB">4.绑定class中的三元表达式</div>
+        <div :style="{color:red,fontSize:font}">5.绑定style</div>
+        <div :style="styleObject">6.绑定style对象</div>
+
+        <hr>
+        <div v-pre>{{imgSrc}}  v-pre显示原值</div>
+        <div v-cloak>渲染完成后显示</div>
+        <div v-once>{{imgSrc}} v-once显示第一的值，不跟随变化</div>
+    </div>
+    <style>
+        .oneClass{
+            color: red;
+        }
+        .twoClass{
+            font-size: 150%;
+        }
+    </style>
+    <script type="text/javascript">
+    var app = new Vue({
+        el:'#app',
+        data:{
+            imgSrc:'https://www.baidu.com/img/bd_logo1.png',
+            webUrl:'https://www.baidu.com/',
+            className:'oneClass',
+            isOk:true,
+            classA:'oneClass',
+            classB:'twoClass',
+            red:'red',
+            font:'20px',
+            styleObject:{
+                fontSize:'24px',
+                color:'green'
+            }
+            
+        }
+    })
+    </script>
+</body>
+</html>
