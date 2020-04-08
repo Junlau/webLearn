@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>Vue.extend扩展实例</title>
+</head>
+<body>
+    <h1>Vue.extend自定义无参数的标签</h1>
+    <hr>
+    <author></author>
+
+    <script type="text/javascript">
+        var authorExtend = Vue.extend({
+            template:"<p><a :href='authorUrl'>{{authorName}}</a></p>",
+            data:function(){
+                return{
+                    authorUrl:'http://www.baidu.com',
+                    authorName:'LJ'
+                }
+            }
+        });
+        //因为扩展实例构造器是需要挂载的，我们再进行一次挂载
+        new authorExtend().$mount('author');
+        //挂载到普通标签上new authorExtend().$mount('author');
+    </script>
+</body>
+</html>
