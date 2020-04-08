@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>Vue.set</title>
+</head>
+<body>
+    <h1>Vue.set 全局操作</h1>
+    <hr>
+    <div id="app">
+        {{count}}
+        <ul>
+            <li v-for="aa in arr">{{aa}}</li>
+        </ul>
+    </div>
+    <button onclick="add()">外部添加</button>
+
+    <script type="text/javascript">
+        function add(){
+            console.log("我已经执行了");
+            /*app.arr[1] = 'vvv';
+            outData.arr[1] = 'vvv';
+            方法里面只执行这一句，数据会改变，但是界面显示不会变*/
+            Vue.set(app.arr,1,'vvv');
+            //三种方式
+            // outData.count++;
+            // Vue.set(outData,'count',4);
+            // app.count++;
+            console.log(app.arr);
+            
+        };
+        var outData = {
+            count:1,
+            arr:['aaa','bbb','ccc','ddd']
+        };
+        var app = new Vue({
+            el:'#app',
+            data:outData
+        });
+    </script>
+
+</body>
+</html>

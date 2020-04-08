@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>Template三种写法</title>
+</head>
+<body>
+    <h1>Template三种写法</h1>
+    <hr>
+    <div id="app">
+        {{message}}
+    </div>
+
+    <template id="demo2">
+        <h2 style="color: red;">第二种写法</ph2>
+    </template>
+
+    <script type="x-template" id="demo3">
+        <h2 style="color: red;">第三种写法</ph2>
+    </script>
+    
+    <script type="text/javascript">
+        var app = new Vue({
+            el:'#app',
+            data:{
+                message:"hello Vue"
+            },
+            //第一种写法
+            // template:`<h2 style="color: red;">第一种写法</ph2>`
+            //第二种写法
+            template:'#demo3'
+        })
+    </script>
+</body>
+</html>
