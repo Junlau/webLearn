@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>Vue component</title>
+</head>
+<body>
+    <h1>Vue component</h1>
+    <br>
+    <h2>component组件是Vue学习的重点、重点、重点，重要的事情说三遍。所以你必须学好Vue component。其实组件就是制作自定义的标签，这些标签在HTML中是没有的</h2>
+
+    <div id="app">
+        <lj></lj>
+        <andy></andy>
+    </div>
+
+    <div id="app2">
+        <lj></lj>
+    </div>
+
+    <script type="text/javascript">
+        //注册全局组件
+        Vue.component('lj',{
+            template:`<div style="color: red;">全局注册组件</div>`
+        })
+        var app = new Vue({
+            el:'#app',
+            data:{
+
+            },
+            components:{
+                "andy":{
+                    template:`<div style="color: blue;">局部注册组件</div>`
+                }
+            }
+        })
+
+        var app2 = new Vue({
+            el:'#app2',
+        })
+    </script>
+
+</body>
+</html>
