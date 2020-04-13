@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>Mixins 混入选项操作</title>
+</head>
+<body>
+    <h1>Mixins 混入选项操作</h1>
+    <div id="app">
+        <p>num：{{num}}</p>
+        <button @click="add">增加</button>
+    </div>
+
+    <script type="text/javascript">
+        var addLog = {
+            updated:function(){
+                console.log("数据发生变化，变化成"+app.num);
+            }
+        };
+         //全局 api 混入方式
+         Vue.mixin({
+            updated:function(){
+                console.log('我是全局被混入的');
+            }
+        });
+        
+        var app = new Vue({
+            el:'#app',
+            data:{
+                num:1,
+            },
+            methods:{
+                add:function(){
+                    this.num++;
+                },
+            },
+            mixins:[addLog],
+            //从执行的先后顺序来说，都是混入的先执行，然后构造器里的再执行，需要注意的是，这并不是方法的覆盖，而是被执行了两边。
+            updated:function(){
+                console.log("构造器里的 update");
+            }
+        });
+       
+    </script>
+</body>
+</html>

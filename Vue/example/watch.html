@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>Watch选项 监控数据</title>
+</head>
+<body>
+    <h1>Watch选项 监控数据</h1>
+    <hr>
+    <div id="app">
+        <p>今日温度：{{wendu}}</p>
+        <p>穿衣建议：{{suggest}}</p>
+        <button @click="add">增加温度</button>
+        <button @click="sub">减少温度</button>
+    </div>
+
+    <script type="text/javascript">
+        var app = new Vue({
+            el:'#app',
+            data:{
+                wendu:14,
+                suggest:'夹克长裙'
+            },
+            methods:{
+                add:function(){
+                    this.wendu = this.wendu + 2;
+                },
+                sub:function(){
+                    this.wendu = this.wendu - 2;
+                }
+            },
+            // watch:{
+            //     wendu:function(newVal,oldVal){
+            //         if(newVal >= 26) {
+            //             this.suggest = 'T恤短袖';
+            //         } else if(newVal < 26 && newVal > 0) {
+            //             this.suggest = '夹克长裙';
+            //         } else {
+            //             this.suggest = '棉衣';
+            //         }
+            //     }
+            // }
+        });
+        //外部监控
+        app.$watch('wendu',function(newVal,oldVal){
+            if(newVal >= 26) {
+                this.suggest = 'T恤短袖';
+            } else if(newVal < 26 && newVal > 0) {
+                this.suggest = '夹克长裙';
+            } else {
+                this.suggest = '棉衣';
+            }
+        });
+    </script>
+
+</body>
+</html>
