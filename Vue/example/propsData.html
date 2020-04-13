@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>propsData Option全局扩展的数据传递</title>
+</head>
+<body>
+    <h1>propsData 不是和属性有关，他用在全局扩展时进行传递数据</h1>
+    <hr>
+    <header></header>
+
+    <script type="text/javascript">
+        var header_a = Vue.extend({
+            template:`<p>{{message}}-{{a}}</p>`,
+            data:function(){
+                return {
+                    message:'Hello , I am header'
+                }
+            },
+            props:['a']
+        });
+        new header_a({propsData:{a:1}}).$mount('header');
+    </script>
+
+</body>
+</html>

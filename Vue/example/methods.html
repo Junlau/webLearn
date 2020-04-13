@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>Methods Option Demo</title>
+</head>
+<body>
+    <h1>Methods Option</h1>
+    <h2>绑定方法实现的地方</h2>
+    <hr>
+    <div id="app">
+        {{number}}
+        <p><button @click="add(2,$event)">增加</button></p>
+        <!--用.native修饰器来调用构造器里的add方法-->
+        <p><btn @click.native="add(3)">增加</btn></p>
+    </div>
+
+    <h3>作用域外部调用构造器里的方法</h3>
+    <button onclick="app.add(4)">外部调用构造器里的方法</button>
+
+    <script type="text/javascript">
+        //将 button 生成组件
+        var btn = {
+            template:`<button>组件Add</button>`
+        }
+        var app = new Vue({
+            el:'#app',
+            data:{
+                number:1
+            },
+            methods:{
+                add:function(num,event){
+                    this.number = this.number + num;
+                    console.log(event)
+                }
+            },
+            components:{
+                "btn":btn
+            }
+        });
+    </script>
+</body>
+</html>
