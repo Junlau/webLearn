@@ -10,16 +10,22 @@
               <el-table-column prop="price" label="金额" width="70"></el-table-column>
               <el-table-column label="操作" width="100" fixed="right">
                 <template slot-scope="scope">
-                  <el-button type="text">删除</el-button>
-                  <el-button type="text">增加</el-button>
+                  <el-button type="text" @click="deleteOrderListGoodsCount(scope.row)">删除</el-button>
+                  <el-button type="text" @click="addOrderList(scope.row)">增加</el-button>
                 </template>
               </el-table-column>
             </el-table>
+
+            <div class="allDiv">
+              <small>数量：</small> {{allCount}} &nbsp &nbsp &nbsp &nbsp  <small>金额：</small> {{allMoney}}元
+            </div>
+
             <div class="bottom-btn">
               <el-button type="warning">挂单</el-button>
               <el-button type="danger">删除</el-button>
               <el-button type="success">结账</el-button>
             </div>
+
           </el-tab-pane>
           <el-tab-pane label="挂单">
             挂单
@@ -30,14 +36,14 @@
         </el-tabs>
       </el-col>
 
-      <el-col span='17' class="pos-goods">
+      <el-col :span='17' class="pos-goods">
         <div class="oftenGoods">
           <div class="title">
             常用商品
           </div>
           <div class="oftenGoods-list">
             <ul>
-              <li v-for="goods in oftenGoods">
+              <li v-for="goods in oftenGoods" @click="addOrderList(goods)">
                 <span>{{goods.goodsName}}</span>
                 <span class="o-price">￥{{goods.price}}元</span>
               </li>
@@ -49,7 +55,7 @@
           <el-tabs>
             <el-tab-pane label="汉堡" >
               <ul class="cookList">
-                <li v-for="item in type0Goods">
+                <li v-for="item in type0Goods" @click="addOrderList(item)">
                   <span class="foodImg"><img referrer="no-referrer|origin|unsafe-url" :src="item.goodsImg" width="100%"></span>
                   <span class="foodName">{{item.goodsName}}</span>
                   <span class="foodPrice">￥{{item.price}}元</span>
@@ -57,13 +63,31 @@
               </ul>
             </el-tab-pane>
             <el-tab-pane label="小食" >
-              汉堡
+              <ul class="cookList">
+                <li v-for="item in type1Goods" @click="addOrderList(item)">
+                  <span class="foodImg"><img referrer="no-referrer|origin|unsafe-url" :src="item.goodsImg" width="100%"></span>
+                  <span class="foodName">{{item.goodsName}}</span>
+                  <span class="foodPrice">￥{{item.price}}元</span>
+                </li>
+              </ul>
             </el-tab-pane>
             <el-tab-pane label="饮料" >
-              汉堡
+              <ul class="cookList">
+                <li v-for="item in type2Goods" @click="addOrderList(item)">
+                  <span class="foodImg"><img referrer="no-referrer|origin|unsafe-url" :src="item.goodsImg" width="100%"></span>
+                  <span class="foodName">{{item.goodsName}}</span>
+                  <span class="foodPrice">￥{{item.price}}元</span>
+                </li>
+              </ul>
             </el-tab-pane>
             <el-tab-pane label="套餐" >
-              汉堡
+              <ul class="cookList">
+                <li v-for="item in type3Goods" @click="addOrderList(item)">
+                  <span class="foodImg"><img referrer="no-referrer|origin|unsafe-url" :src="item.goodsImg" width="100%"></span>
+                  <span class="foodName">{{item.goodsName}}</span>
+                  <span class="foodPrice">￥{{item.price}}元</span>
+                </li>
+              </ul>
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -74,8 +98,38 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'pos',
+  created:function(){
+    axios.get('https://www.fastmock.site/mock/0bf6a5bae7eab8507e44b56191ddff36/vuepos/oftenGoods')
+    .then(response => {
+      // console.log(response.data['oftenGoods'])
+      this.oftenGoods = response.data['oftenGoods'];
+    })
+    .catch(error=>{
+      alert('网络错误，请重试')
+    })
+
+    axios.get('https://www.fastmock.site/mock/0bf6a5bae7eab8507e44b56191ddff36/vuepos/typeGoods')
+    .then(response => {
+      var dic0 = response.data['data'][0];
+      this.type0Goods = Object.values(dic0);
+
+      var dic1 = response.data['data'][1];
+      this.type1Goods = Object.values(dic1);
+
+      var dic2 = response.data['data'][2];
+      this.type2Goods = Object.values(dic2);
+
+      var dic3 = response.data['data'][3];
+      this.type3Goods = Object.values(dic3);
+    })
+    .catch(error=>{
+      alert('网络错误，请重试')
+    })
+
+  },
   mounted:function(){
     //设置order-list高度
     var orderHeight = document.body.clientHeight;
@@ -85,88 +139,62 @@ export default {
   },
   data(){
     return {
-      tableData: [{
-          goodsName: '可口可乐',
-          price: 8,
-          count:1
-        }, {
+      tableData: [],
+      oftenGoods:[],
+      type0Goods:[],
+      type1Goods:[],
+      type2Goods:[],
+      type3Goods:[],
+      allCount:0,
+      allMoney:0
+    }
+  },
+  methods:{
+    addOrderList(goods) {
+      this.allCount = 0;
+      this.allMoney = 0;
 
-          goodsName: '香辣鸡腿堡',
-          price: 15,
-          count:1
-        }, {
+      //判断商品是否已经在订单列表中
+      var isHave = false;
+      for(let i = 0; i < this.tableData.length; i++){
+        if(this.tableData[i].goodsId == goods.goodsId) {
+          isHave = true;
+          break;
+        }
+      }
+      if (isHave) {
+        //利用filter进行筛选
+        let arr = this.tableData.filter(o=>o.goodsId == goods.goodsId);
+        arr[0].count++;
+      } else {
+        let newGoods = {goodsId:goods.goodsId, goodsName:goods.goodsName,price:goods.price,count:1};
+        this.tableData.push(newGoods);
+      }
 
-          goodsName: '爱心薯条',
-          price: 8,
-          count:1
-        }, {
+      //计算汇总金额和数量
+      for(let i = 0; i < this.tableData.length; i++){
+        let item = this.tableData[i];
+        this.allCount = this.allCount + item.count;
+        this.allMoney = this.allMoney + (item.count * item.price);
+      }
+    },
 
-          goodsName: '甜筒',
-          price: 8,
-          count:1
-        }],
-      oftenGoods:[
-          {
-              goodsId:1,
-              goodsName:'香辣鸡腿堡',
-              price:18
-          }, {
-              goodsId:2,
-              goodsName:'田园鸡腿堡',
-              price:15
-          }, {
-              goodsId:3,
-              goodsName:'和风汉堡',
-              price:15
-          }, {
-              goodsId:4,
-              goodsName:'快乐全家桶',
-              price:80
-          }, {
-              goodsId:5,
-              goodsName:'脆皮炸鸡腿',
-              price:10
-          }, {
-              goodsId:6,
-              goodsName:'魔法鸡块',
-              price:20
-          }, {
-              goodsId:7,
-              goodsName:'可乐大杯',
-              price:10
-          }, {
-              goodsId:8,
-              goodsName:'雪顶咖啡',
-              price:18
-          }, {
-              goodsId:9,
-              goodsName:'大块鸡米花',
-              price:15
-          }, {
-              goodsId:20,
-              goodsName:'香脆鸡柳',
-              price:17
-          }
-      ],
-      type0Goods:[
-          {
-              goodsId:1,
-              goodsImg:"https://hbimg.huabanimg.com/6f046582fea083bef63c757207ebb0e03960f9569676f4-KKEFiY_fw658",
-              goodsName:'香辣鸡腿堡',
-              price:18
-          }, {
-              goodsId:2,
-              goodsImg:"https://hbimg.huabanimg.com/1b7891f844c60f4dcb77aeab2ff6046216302ee211b6a-ZgkAdI_fw658",
-              goodsName:'田园鸡腿堡',
-              price:15
-          }, {
-              goodsId:3,
-              goodsImg:"https://hbimg.huabanimg.com/b578ba4db8befc193ce07a2a1055ed2467875ebd7b082-S3apZb_fw658",
-              goodsName:'和风汉堡',
-              price:15
-          }
-      ]
+    deleteOrderListGoodsCount(goods) {
+      if (goods.count == 1) {
+        this.tableData.pop(goods);
+      } else {
+        let arr = this.tableData.filter(o=>o.goodsId == goods.goodsId);
+        arr[0].count--;
+      }
 
+      //计算汇总金额和数量
+      this.allCount = 0;
+      this.allMoney = 0;
+      for(let i = 0; i < this.tableData.length; i++){
+        let item = this.tableData[i];
+        this.allCount = this.allCount + item.count;
+        this.allMoney = this.allMoney + (item.count * item.price);
+      }
     }
   }
 }
@@ -204,6 +232,7 @@ export default {
   padding: 10px;
   margin:5px;
   background-color:#fff;
+  cursor: pointer;
 }
 
 .o-price {
@@ -226,6 +255,7 @@ export default {
   padding: 2px;
   float: left;
   margin: 2px;
+  cursor: pointer;
 }
 
 .cookList li span {
@@ -251,5 +281,13 @@ export default {
   font-size: 16px;
   padding-left: 10px;
   padding-top: 10px;
+}
+
+.allDiv {
+  background-color: #fff;
+  padding: 10px;
+  border-bottom: 1px solid #D3DCE6;
+  border-left: 1px solid #D3DCE6;
+  border-right: 1px solid #D3DCE6;
 }
 </style>
