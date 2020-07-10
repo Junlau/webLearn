@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深拷贝，浅拷贝</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var obj = {
+        name:"liu",
+        age:30,
+        sex:"male",
+        phone:["iphone"],
+        wife:{
+            name:"zhu",
+            age:27
+        }
+    };
+
+    var obj1 = {};
+    function copyObject(target, origin) {
+        for (let prop in origin) {
+            if(origin[prop] instanceof Array) {
+                let tempArray = [];
+                for(let i = 0; i < origin[prop].length; i++){
+                    tempArray.push(origin[prop][i]);
+                }
+                target[prop] = tempArray;
+            } else if(origin[prop] instanceof Object) {
+                let tempObject = {};
+                target[prop] = copyObject(tempObject, origin[prop]);
+            } else {
+                target[prop] = origin[prop];
+            }
+        }
+        return target;
+    }
+
+    copyObject(obj1, obj);
+
+    obj1.phone.push("mi");
+
+    console.log(obj1)
+
+</script>
+</html>
