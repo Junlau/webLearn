@@ -20,6 +20,8 @@
         }
     };
 
+    // [] instanceof Object = true
+    
     var obj1 = {};
     function copyObject(target, origin) {
         for (let prop in origin) {
@@ -38,6 +40,8 @@
         }
         return target;
     }
+
+    
 
     copyObject(obj1, obj);
 
