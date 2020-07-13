@@ -13,7 +13,7 @@
         name:"liu",
         age:30,
         sex:"male",
-        phone:["iphone"],
+        phone:["iphone",["mi"]],
         wife:{
             name:"zhu",
             age:27
@@ -23,23 +23,53 @@
     // [] instanceof Object = true
     
     var obj1 = {};
+
     function copyObject(target, origin) {
+        var target = target || {};
+        toStr = Object.prototype.toString;
+        arrStr = "[object Array]";
+
         for (let prop in origin) {
-            if(origin[prop] instanceof Array) {
-                let tempArray = [];
-                for(let i = 0; i < origin[prop].length; i++){
-                    tempArray.push(origin[prop][i]);
+            //判断是自己的属性而不是原型链上的属性
+            if(origin.hasOwnProperty(prop)){
+                //使用 typeof 来判断是不是值对象
+                if(typeof(origin[prop]) == "object") {
+                    //使用 toSting 来判断是数组还是对象，并且不等于 null
+                    if(toStr.call(origin[prop]) == arrStr && origin[prop] !== "null") {
+                        target[prop] = [];
+                    } else {
+                        target[prop] = {};
+                    }
+                    //递归
+                    //数组也可以用 for in
+                    copyObject(target[prop], origin[prop]);
+                } else {
+                    target[prop] = origin[prop];
                 }
-                target[prop] = tempArray;
-            } else if(origin[prop] instanceof Object) {
-                let tempObject = {};
-                target[prop] = copyObject(tempObject, origin[prop]);
-            } else {
-                target[prop] = origin[prop];
             }
         }
         return target;
     }
+
+
+    //下面的方法有个问题，如果数组里面还有数组，达不到深拷贝的目的
+    // function copyObject(target, origin) {
+    //     for (let prop in origin) {
+    //         if(origin[prop] instanceof Array) {
+    //             let tempArray = [];
+    //             for(let i = 0; i < origin[prop].length; i++){
+    //                 tempArray.push(origin[prop][i]);
+    //             }
+    //             target[prop] = tempArray;
+    //         } else if(origin[prop] instanceof Object) {
+    //             let tempObject = {};
+    //             target[prop] = copyObject(tempObject, origin[prop]);
+    //         } else {
+    //             target[prop] = origin[prop];
+    //         }
+    //     }
+    //     return target;
+    // }
 
     
 
