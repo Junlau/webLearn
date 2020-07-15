@@ -71,13 +71,65 @@
     //     return target;
     // }
 
+    copyObject(obj1, obj);
+    obj1.phone.push("mi");
+    console.log(obj1);
     
 
-    copyObject(obj1, obj);
+    function type (target) {
+        if (typeof(target) == "object") {
+            let typeStr = Object.prototype.toString.call(target);
+            let strArray = typeStr.split(" ");
+            let str = strArray[1];
+            str = str.substring(0,str.length - 1);
+            return str;
+        } else {
+            console.log(typeof(target));
+            return typeof(target);
+        }
+    }
 
-    obj1.phone.push("mi");
+    function type2 (target) {
+        let allObject = {
+            "[object Array]" : "array",
+            "[object Object]" : "Object",
+            "[object Number]" : "Number--object",
+            "[object Boolean]" : "Boolean--object",
+            "[object String]" : "String--object"
+        };
+        
+        if (target === null) {
+            return "null";
+        } else if (typeof(target) == "object") {
+            let typeStr = Object.prototype.toString.call(target);
+            return allObject[typeStr];
+        } else {
+            return typeof(target);
+        }
+    }
 
-    console.log(obj1)
+
+    //数组去重方法
+    // Array.prototype.unique = function () {
+    //     let tempObject = {};
+    //     for (let i = 0; i < this.length; i++) {
+    //         tempObject[String(this[i])] = this[i];
+    //     }
+    //     return Object.values(tempObject);
+    // }
+    
+    //数组去重方法，数组里面存对象去重会有问题
+    Array.prototype.unique = function () {
+        let tempObject = {};
+        let arr = [];
+        for (let i = 0; i < this.length; i++) {
+            if(!tempObject[this[i]]) {
+                tempObject[this[i]]="abc";
+                arr.push(this[i]);
+            }
+        }
+        return arr;
+    }
 
 </script>
 </html>
