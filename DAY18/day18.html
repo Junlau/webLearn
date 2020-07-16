@@ -131,5 +131,40 @@
         return arr;
     }
 
+
+    //一个字符串[a-z]组成，请找出该字符串第一个只出现一次的字母
+    function firstDisplaySingle (target) {
+        let tempObject = {};
+        for(let i = 0; i < target.length; i++) {
+            if (!tempObject[target[i]]) {
+                tempObject[target[i]] = 1;
+            } else {
+                tempObject[target[i]] = tempObject[target[i]] + 1;
+            }
+        }
+
+        for (let key in tempObject) {
+            if (tempObject.hasOwnProperty(key)) {
+                if (tempObject[key] == 1) {
+                    return key;
+                }
+            }
+        }
+        return null;
+    }
+
+    //字符串去重
+    String.prototype.unique = function () {
+        let tempObject = {};
+        let arr = [];
+        for(let i = 0; i < this.length; i++) {
+            if (!tempObject[this[i]]) {
+                tempObject[this[i]] = "abc";
+                arr.push(this[i]);
+            }
+        }
+        return arr.join("");
+    }
+
 </script>
 </html>
