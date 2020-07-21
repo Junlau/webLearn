@@ -6,9 +6,40 @@
     <title>深拷贝，浅拷贝</title>
 </head>
 <body>
-    
+    <!-- <div>
+        <div>
+            <span>
+                <a href="" title=""></a>
+            </span>
+        </div>
+         <span></span>
+    </div>
+    <div>
+        <div>
+            <div>
+                <span></span>
+            </div>
+        </div>
+    </div> -->
+    <span class="msg">Hello World !</span>
+    <ul>
+        <li>电影</li>
+        <li>综艺
+            <ul>
+                <li>跑男</li>
+                <li>爸爸</li>
+                <li>真男</li>
+            </ul>
+        </li>
+        <li>剧集</li>
+    </ul>
 </body>
 <script>
+    function Person () {
+
+    };
+
+
     var obj = {
         name:"liu",
         age:30,
@@ -165,6 +196,35 @@
         }
         return arr.join("");
     }
+
+
+    //自定义标签并插入
+    // var div = document.createElement('div');
+    // div.setAttribute('class', 'example');
+
+    // var p = document.createElement('p');
+    // p.innerHTML = "LJ";
+    // p.setAttribute('class','slogan');
+    // div.appendChild(p);
+
+    // document.body.appendChild(div);
+    
+    //遍历元素节点树（在原型链上编程）
+    var list = [];
+    Element.prototype.eachAll = function () {
+        if (this.hasChildNodes) {
+             for(let i = 0; i < this.children.length; i++) {
+                 var child = this.children[i];
+                 list.push(child);
+             }
+        }
+
+        
+    };
+
+
+
+
 
 </script>
 </html>
