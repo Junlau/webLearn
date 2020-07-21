@@ -210,16 +210,30 @@
     // document.body.appendChild(div);
     
     //遍历元素节点树（在原型链上编程）
-    var list = [];
     Element.prototype.eachAll = function () {
-        if (this.hasChildNodes) {
-             for(let i = 0; i < this.children.length; i++) {
-                 var child = this.children[i];
-                 list.push(child);
-             }
+        var list = [];
+        list.push(this);
+        while(list.length) {
+            let child = list[0];
+            console.log(child.nodeName + '\n');
+            if (child.hasChildNodes) {
+                for(let i = 0; i < child.children.length; i++) {
+                    let otherChild = child.children[i];
+                    list.push(otherChild);
+                }
+            }
+            list.shift();
         }
+    };
 
-        
+    Element.prototype.eachAll2 = function () {
+        console.log(this.nodeName);
+        if (this.hasChildNodes) {
+            for(let i = 0; i < this.children.length; i++) {
+                let otherChild = this.children[i];
+                otherChild.eachAll();
+            }
+        }
     };
 
 
