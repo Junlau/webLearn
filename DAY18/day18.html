@@ -21,18 +21,8 @@
             </div>
         </div>
     </div> -->
-    <span class="msg">Hello World !</span>
-    <ul>
-        <li>电影</li>
-        <li>综艺
-            <ul>
-                <li>跑男</li>
-                <li>爸爸</li>
-                <li>真男</li>
-            </ul>
-        </li>
-        <li>剧集</li>
-    </ul>
+
+    <div><a></a><em></em></div>
 </body>
 <script>
     function Person () {
@@ -235,6 +225,91 @@
             }
         }
     };
+
+    //封装函数，返回元素e的第n层祖先元素节点
+    function retParentElement (e, n) {
+        while(e && n) {
+            e = e.parentElement;
+            n--;
+        }
+        return e;
+    }
+
+    //封装函数，返回元素e的第n个兄弟元素节点，n为正，返回后面的兄弟元素节点，n为负，返回前面的，n为0，返回自己
+    function retBrotherElement (e, n) {
+        while (e && n) {
+            if (n > 0) {
+                e = e.nextSibling;
+                // e = e.nextElementSibling;
+                // for(e = e.nextSibling; e && e.nodeType != 1; e = e.nextSibling);
+                //判断是否是元素节点
+                if (e && e.nodeType == 1 && e) {
+                    n--;
+                }
+            } else if (n < 0) {
+                e = e.previousSibling;
+                if (e && e.nodeType == 1) {
+                    n++;
+                }
+            }
+        }
+        return e;
+    }
+
+    //编辑函数，封装 myChildren功能，解决以前部分浏览器的兼容性问题
+    Element.prototype.myChildren = function () {
+        let num = this.childNodes.length;
+        var arr = [];
+        for (let i = 0; i < num; i++) {
+            let child = this.childNodes[i];
+            if(child.nodeType == 1) {
+                arr.push(child);
+            }
+        }
+        return arr;
+    }
+
+    //自己封装 hasChildren()方法，不可用children属性
+    Element.prototype.myHasChildren = function () {
+        let num = this.childNodes.length;
+        for (let i = 0; i < null; i++) {
+            let child = this.childNodes[i];
+            if(child.nodeType == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    //封装函数insertAfter()；功能类似 insertBefore()
+    Element.prototype.insertAfter = function (newElem, hasElem) {
+        var nextElem = hasElem.nextElementSibling;
+        if (nextElem) {
+            this.insertBefore(newElem,nextElem);
+        } else {
+            this.appendChild(newElem);
+        }
+    }
+
+
+    //将目标节点内部的节点顺序逆序 eg:<div><a></a><em></em></div> 变成 <div><em></em><a></a></div>
+    function backChildElement (elem) {
+        var childArray = elem.children;
+        var num = childArray.length;
+        // for (let i = 0; i < num; i++) {
+        //     let child = childArray[i];
+        //     child.remove();
+        //     elem.removeChild(elem.children[i]);
+        //     remove和removeChild调用的同时，childArray也会变化
+        // }
+        while (num) {
+            let backChild = childArray[num - 1];
+            //appendChild是剪切功能
+            elem.appendChild(backChild);
+            num--;
+        }
+    }
+
 
 
 
