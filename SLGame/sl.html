@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扫雷</title>
+    <style>
+        .connect {
+            width: 198px;
+            height: 198px;
+            margin: auto;
+        }
+        ul {
+            padding: 0px;
+        }
+        ul li {
+            width: 20px;
+            height: 20px;
+            list-style: none;
+            float: left;
+            border: 1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="connect">
+        <ul>
+            <li tag = '1'></li>
+            <li tag = '2'></li>
+            <li tag = '3'></li>
+            <li tag = '4'></li>
+            <li tag = '5'></li>
+            <li tag = '6'></li>
+            <li tag = '7'></li>
+            <li tag = '8'></li>
+            <li tag = '9'></li>
+            <li tag = '10'></li>
+            <li tag = '11'></li>
+            <li tag = '12'></li>
+            <li tag = '13'></li>
+            <li tag = '14'></li>
+            <li tag = '15'></li>
+            <li tag = '16'></li>
+            <li tag = '17'></li>
+            <li tag = '18'></li>
+            <li tag = '19'></li>
+            <li tag = '20'></li>
+            <li tag = '21'></li>
+            <li tag = '22'></li>
+            <li tag = '23'></li>
+            <li tag = '24'></li>
+            <li tag = '25'></li>
+            <li tag = '26'></li>
+            <li tag = '27'></li>
+            <li tag = '28'></li>
+            <li tag = '29'></li>
+            <li tag = '30'></li>
+            <li tag = '31'></li>
+            <li tag = '32'></li>
+            <li tag = '33'></li>
+            <li tag = '34'></li>
+            <li tag = '35'></li>
+            <li tag = '36'></li>
+            <li tag = '37'></li>
+            <li tag = '38'></li>
+            <li tag = '39'></li>
+            <li tag = '40'></li>
+            <li tag = '41'></li>
+            <li tag = '42'></li>
+            <li tag = '43'></li>
+            <li tag = '44'></li>
+            <li tag = '45'></li>
+            <li tag = '46'></li>
+            <li tag = '47'></li>
+            <li tag = '48'></li>
+            <li tag = '49'></li>
+            <li tag = '50'></li>
+            <li tag = '51'></li>
+            <li tag = '52'></li>
+            <li tag = '53'></li>
+            <li tag = '54'></li>
+            <li tag = '55'></li>
+            <li tag = '56'></li>
+            <li tag = '57'></li>
+            <li tag = '58'></li>
+            <li tag = '59'></li>
+            <li tag = '60'></li>
+            <li tag = '61'></li>
+            <li tag = '62'></li>
+            <li tag = '63'></li>
+            <li tag = '64'></li>
+            <li tag = '65'></li>
+            <li tag = '66'></li>
+            <li tag = '67'></li>
+            <li tag = '68'></li>
+            <li tag = '69'></li>
+            <li tag = '70'></li>
+            <li tag = '71'></li>
+            <li tag = '72'></li>
+            <li tag = '73'></li>
+            <li tag = '74'></li>
+            <li tag = '75'></li>
+            <li tag = '76'></li>
+            <li tag = '77'></li>
+            <li tag = '78'></li>
+            <li tag = '79'></li>
+            <li tag = '80'></li>
+            <li tag = '81'></li>
+        </ul>
+    </div>
+</body>
+
+<script>
+    var ulEle = document.getElementsByTagName('ul')[0];
+    ulEle.onclick = function (event) {
+        var liEle = event.target;
+        console.log(liEle.getAttribute("tag"));
+    }
+
+    var allData = [];
+    //li的状态 0没有，10为雷，11为标记是雷，先创建有雷的数据
+    allData.push([0,10,0,10,0,0,0,10,0]);
+    allData.push([0,10,0,0,0,10,0,0,0]);
+    allData.push([0,0,10,0,0,0,0,0,10]);
+    allData.push([0,0,10,0,10,0,0,0,0]);
+    allData.push([0,0,10,10,0,0,0,0,0]);
+    allData.push([0,0,10,0,0,10,0,0,0]);
+    allData.push([0,0,10,10,0,10,0,0,0]);
+    allData.push([0,0,0,0,10,10,0,0,0]);
+    allData.push([0,0,10,10,0,10,0,0,0]);
+
+    //更新雷周边的数据
+    for(let i = 0; i < allData.length; i++){
+        let childArray = allData[i];
+        for(let j = 0; j < childArray.length; j++) {
+            if(childArray[j] != 10) {
+                let count = 0;
+                if ((i - 1)>= 0) {
+                    
+                }
+            }
+        }
+    }
+
+</script>
+</html>
