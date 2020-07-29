@@ -112,14 +112,41 @@
 </body>
 
 <script>
+    // 0 为未标记，1 为已点击，2 为已标记为雷
+    var stateDic = {};
+    var allData = [];
+
     var ulEle = document.getElementsByTagName('ul')[0];
-    ulEle.onclick = function (event) {
-        var liEle = event.target;
-        console.log(liEle.getAttribute("tag"));
+    ulEle.onmousedown = function (event) {
+        console.log (event);
+        //左键 event.button = 0 右键 event.button = 2
+        if(event.button == 0) {
+            let liEle = event.target;
+            if (stateDic[liEle.getAttribute("tag")] == null || stateDic[liEle.getAttribute("tag")] == 0) {
+                stateDic[liEle.getAttribute("tag")] = 1;
+            }
+            updateLiStatus();
+        } else if(event.button == 2) {
+            let liEle = event.target;
+            if (stateDic[liEle.getAttribute("tag")] == null || stateDic[liEle.getAttribute("tag")] == 0) {
+                stateDic[liEle.getAttribute("tag")] = 2;
+            }
+            updateLiStatus();
+        }
+    }
+    // ulEle.onclick = function (event) {
+    //     let liEle = event.target;
+    //     stateDic[liEle.getAttribute("tag")] = 1;
+    //     updateLiStatus();
+    //     console.log ('1111');
+    // }
+    //取消右键菜单弹出
+    ulEle.oncontextmenu = function (e) {
+        return false;
     }
 
-    var allData = [];
-    //li的状态 0没有，10为雷，11为标记是雷，先创建有雷的数据
+    
+    //li数据，标记周边的雷个数 0没有，10为雷，先创建有雷的数据
     allData.push([0,10,0,10,0,0,0,10,0]);
     allData.push([0,10,0,0,0,10,0,0,0]);
     allData.push([0,0,10,0,0,0,0,0,10]);
@@ -136,12 +163,68 @@
         for(let j = 0; j < childArray.length; j++) {
             if(childArray[j] != 10) {
                 let count = 0;
-                if ((i - 1)>= 0) {
-                    
+                
+                if(j + 1 < childArray.length) {
+                    let temp1 = childArray[j + 1];
+                    count = temp1 == 10 ? (count + 1) : count;
                 }
+                if(j - 1 >= 0) {
+                    let temp2 = childArray[j - 1];
+                    count = temp2 == 10 ? (count + 1) : count;
+                }
+
+                if(i + 1 < allData.length) {
+                    if (j - 1 >= 0) {
+                        let temp3 = allData[i + 1][j - 1];
+                        count = temp3 == 10 ? (count + 1) : count;
+                    }
+                    if (j + 1 < childArray.length) {
+                        let temp4 = allData[i + 1][j + 1];
+                        count = temp4 == 10 ? (count + 1) : count;
+                    }
+                    let temp5 = allData[i + 1][j];
+                    count = temp5 == 10 ? (count + 1) : count;
+                }
+                if (i - 1 >= 0) {
+                    if (j - 1 >= 0) {
+                        let temp6 = allData[i - 1][j - 1];
+                        count = temp6 == 10 ? (count + 1) : count;
+                    }
+                    if (j + 1 < childArray.length) {
+                        let temp7 = allData[i - 1][j + 1];
+                        count = temp7 == 10 ? (count + 1) : count;
+                    }
+                    let temp8 = allData[i - 1][j];
+                    count = temp8 == 10 ? (count + 1) : count;
+                }
+                childArray[j] = count;
             }
         }
     }
+
+    function updateLiStatus(){
+        var liEleArray = document.getElementsByTagName('li');
+        for (let i = 0; i < liEleArray.length; i++) {
+            let liEle = liEleArray[i];
+            let tag = liEle.getAttribute("tag");
+            let status = stateDic[tag];
+            if (status == null || status == 0) {
+                liEle.style.backgroundColor = 'blue';
+            } else if(status == 1) {
+                let tagInt = parseInt(tag) - 1;
+                let a = Math.floor(tagInt/allData.length);
+                let b = tagInt%allData.length;
+                let count = allData[a][b];
+
+                liEle.style.backgroundColor = 'white';
+                liEle.innerText = count;
+            } else if(status == 2) {
+                liEle.style.backgroundColor = 'red';
+            }
+        }
+    }
+    
+    updateLiStatus();
 
 </script>
 </html>
