@@ -117,9 +117,6 @@
                         //点中空白，显示所以与他联系的除了雷以外的格子
                         li.className = 'zero';
                         getAllZero(tempSquare);
-                        
-
-
                     } else if (tempSquare.value == 1) {
                         li.className = 'one';
                         li.innerHTML = tempSquare.value;
@@ -134,7 +131,7 @@
                 This.surplusMine = This.surplusMine - 1;
             }
 
-
+            //找到所有有联系的空
             function getAllZero (square) {
 
                 let dataArray = This.getAround(square);
@@ -231,6 +228,7 @@
         this.creatData();
     }
 
+    //找到周边8个位置
     Mine.prototype.getAround = function (square) {
         let i = square.x;
         let j = square.y;
