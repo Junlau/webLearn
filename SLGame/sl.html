@@ -25,6 +25,20 @@
             text-align: center;
             line-height: 20px;
         }
+        .zero {
+            background: #d9d9d9;
+            border-color: #d9d9d9;
+        }
+        .one {
+            color: rgb(96, 96, 221);
+            background: #d9d9d9;
+            border-color: #d9d9d9;
+        }
+        .two {
+            color: rgb(212, 159, 90);
+            background: #d9d9d9;
+            border-color: #d9d9d9;
+        }
 
     </style>
 </head>
@@ -52,6 +66,7 @@
     }
 
     Mine.prototype.creatView = function () {
+        var This = this;
         //确定每个格子的宽和高以及边框
         var width = 20;
         var height = 20;
@@ -74,11 +89,76 @@
 
         //点击事件
         ulEle.onmousedown = function (event) {
+            //this指向ulEle，需要用This
+            let li = event.target;
+            var tag = li.index;
+
+            let x = Math.floor(tag/This.td);
+            let y = tag%This.tr;
+
+            let tempSquare = This.squares[x][y];
             if (event.button == 0){
                 //左键
+                if (tempSquare.type == 'mine') {
+                    //点中雷，显示所有的雷
+                    for(let k = 0; k < This.lis.length; k++) {
+                        let tempLi = This.lis[k];
+
+                        let a = Math.floor(k/This.td);
+                        let b = k%This.tr;
+                        let tempSquare2 = This.squares[a][b];
+
+                        if (tempSquare2.type == 'mine') {
+                            tempLi.style.backgroundColor = 'red';
+                        }
+                    }
+                } else {
+                    if(tempSquare.value == 0) {
+                        //点中空白，显示所以与他联系的除了雷以外的格子
+                        li.className = 'zero';
+                        getAllZero(tempSquare);
+                        
+
+
+                    } else if (tempSquare.value == 1) {
+                        li.className = 'one';
+                        li.innerHTML = tempSquare.value;
+                    } else {
+                        li.className = 'two';
+                        li.innerHTML = tempSquare.value;
+                    }
+                }
             } else if (event.button == 2) {
                 //右键
+                li.style.backgroundColor = 'green';
+                This.surplusMine = This.surplusMine - 1;
             }
+
+
+            function getAllZero (square) {
+
+                let dataArray = This.getAround(square);
+                for (let i = 0; i<dataArray.length; i++) {
+                    let tempSq = dataArray[i];
+                    let aroundLi = This.lis[tempSq.x*This.td + tempSq.y];
+                    if(tempSq.value == 0) {
+                        //点中空白，显示所以与他联系的除了雷以外的格子
+                        aroundLi.className = 'zero';
+                    } else if (tempSq.value == 1) {
+                        aroundLi.className = 'one';
+                        aroundLi.innerHTML = tempSq.value;
+                    } else {
+                        aroundLi.className = 'two';
+                        aroundLi.innerHTML = tempSq.value;
+                    }
+
+                    if(tempSq.value == 0 && tempSq.hasCheck != true) {
+                        tempSq.hasCheck = true;
+                        getAllZero(tempSq);
+                    } 
+                }
+            }
+
         }
 
         //取消右键菜单弹出
@@ -119,39 +199,15 @@
                 let data = this.squares[i][j];
                 if (data.type == "number") {
                     let count = 0;
-                    if(j + 1 < this.td) {
-                        let temp1 = this.squares[i][j + 1];
-                        count = temp1.type == "mine" ? (count + 1) : count;
-                    }
-                    if(j - 1 >= 0) {
-                        let temp2 = this.squares[i][j - 1];
-                        count = temp2.type == "mine" ? (count + 1) : count;
+                    
+                    let dataArray = this.getAround(data);
+                    for (let k = 0; k < dataArray.length; k++) {
+                        let sq = dataArray[k];
+                        if(sq.type == 'mine') {
+                            count++;
+                        }
                     }
 
-                    if(i + 1 < this.tr) {
-                        if (j - 1 >= 0) {
-                        let temp3 = this.squares[i + 1][j - 1];
-                        count = temp3.type == "mine" ? (count + 1) : count;
-                        }
-                        if (j + 1 < this.td) {
-                            let temp4 = this.squares[i + 1][j + 1];
-                            count = temp4.type == "mine" ? (count + 1) : count;
-                        }
-                        let temp5 = this.squares[i + 1][j];
-                        count = temp5.type == "mine" ? (count + 1) : count;
-                    }
-                    if (i - 1 >= 0) {
-                        if (j - 1 >= 0) {
-                            let temp6 = this.squares[i - 1][j - 1];
-                            count = temp6.type == "mine" ? (count + 1) : count;
-                        }
-                        if (j + 1 < this.td) {
-                            let temp7 = this.squares[i - 1][j + 1];
-                            count = temp7.type == "mine" ? (count + 1) : count;
-                        }
-                        let temp8 = this.squares[i - 1][j];
-                        count = temp8.type == "mine" ? (count + 1) : count;
-                    }
                     data.value = count;
                 }
             }
@@ -173,25 +229,49 @@
     Mine.prototype.init = function () {
         this.creatView();
         this.creatData();
+    }
 
-        for (let i = 0; i < this.lis.length; i++) {
-            var liEle = this.lis[i];
-            var tag = liEle.index;
-
-            let x = Math.floor(tag/this.td);
-            let y = tag%this.tr;
-
-            var square = this.squares[x][y];
-
-            if (square.type == 'mine') {
-                liEle.style.backgroundColor = 'red';
-            } else {
-                liEle.innerHTML = square.value;
-            }
+    Mine.prototype.getAround = function (square) {
+        let i = square.x;
+        let j = square.y;
+        let dataArray = [];
+        if(j + 1 < this.td) {
+            let temp1 = this.squares[i][j + 1];  
+            dataArray.push(temp1); 
         }
+        if(j - 1 >= 0) {
+            let temp2 = this.squares[i][j - 1];
+            dataArray.push(temp2); 
+        }
+        if(i + 1 < this.tr) {
+            if (j - 1 >= 0) {
+                let temp3 = this.squares[i + 1][j - 1];
+                dataArray.push(temp3); 
+            }
+            if (j + 1 < this.td) {
+                let temp4 = this.squares[i + 1][j + 1];
+                dataArray.push(temp4); 
+            }
+            let temp5 = this.squares[i + 1][j];
+            dataArray.push(temp5); 
+            
+        }
+        if (i - 1 >= 0) {
+            if (j - 1 >= 0) {
+                let temp6 = this.squares[i - 1][j - 1];
+                dataArray.push(temp6); 
+            }
+            if (j + 1 < this.td) {
+                let temp7 = this.squares[i - 1][j + 1];
+                dataArray.push(temp7); 
+            }
+            let temp8 = this.squares[i - 1][j];
+            dataArray.push(temp8); 
+        }
+        return dataArray;
     }
     
-    var mine = new Mine(9,9,10);
+    var mine = new Mine(28,28,99);
     mine.init();
     
 
