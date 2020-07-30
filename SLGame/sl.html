@@ -21,6 +21,9 @@
             border: 2px solid;
             border-color: #fff #a1a1a1 #a1a1a1 #fff;
             background-color: #ccc;
+
+            text-align: center;
+            line-height: 20px;
         }
 
     </style>
@@ -122,32 +125,32 @@
                     }
                     if(j - 1 >= 0) {
                         let temp2 = this.squares[i][j - 1];
-                        count = temp2 == "mine" ? (count + 1) : count;
+                        count = temp2.type == "mine" ? (count + 1) : count;
                     }
 
                     if(i + 1 < this.tr) {
                         if (j - 1 >= 0) {
                         let temp3 = this.squares[i + 1][j - 1];
-                        count = temp3 == "mine" ? (count + 1) : count;
+                        count = temp3.type == "mine" ? (count + 1) : count;
                         }
                         if (j + 1 < this.td) {
                             let temp4 = this.squares[i + 1][j + 1];
-                            count = temp4 == "mine" ? (count + 1) : count;
+                            count = temp4.type == "mine" ? (count + 1) : count;
                         }
                         let temp5 = this.squares[i + 1][j];
-                        count = temp5 == "mine" ? (count + 1) : count;
+                        count = temp5.type == "mine" ? (count + 1) : count;
                     }
                     if (i - 1 >= 0) {
                         if (j - 1 >= 0) {
                             let temp6 = this.squares[i - 1][j - 1];
-                            count = temp6 == "mine" ? (count + 1) : count;
+                            count = temp6.type == "mine" ? (count + 1) : count;
                         }
                         if (j + 1 < this.td) {
                             let temp7 = this.squares[i - 1][j + 1];
-                            count = temp7 == "mine" ? (count + 1) : count;
+                            count = temp7.type == "mine" ? (count + 1) : count;
                         }
                         let temp8 = this.squares[i - 1][j];
-                        count = temp8 == "mine" ? (count + 1) : count;
+                        count = temp8.type == "mine" ? (count + 1) : count;
                     }
                     data.value = count;
                 }
@@ -181,7 +184,7 @@
             var square = this.squares[x][y];
 
             if (square.type == 'mine') {
-                liEle.innerHTML = '0';
+                liEle.style.backgroundColor = 'red';
             } else {
                 liEle.innerHTML = square.value;
             }
