@@ -13,218 +13,184 @@
         ul {
             padding: 0px;
         }
-        ul li {
+        li {
             width: 20px;
             height: 20px;
             list-style: none;
             float: left;
-            border: 1px solid black;
+            border: 2px solid;
+            border-color: #fff #a1a1a1 #a1a1a1 #fff;
+            background-color: #ccc;
         }
 
     </style>
 </head>
 <body>
     <div class="connect">
-        <ul>
-            <li tag = '1'></li>
-            <li tag = '2'></li>
-            <li tag = '3'></li>
-            <li tag = '4'></li>
-            <li tag = '5'></li>
-            <li tag = '6'></li>
-            <li tag = '7'></li>
-            <li tag = '8'></li>
-            <li tag = '9'></li>
-            <li tag = '10'></li>
-            <li tag = '11'></li>
-            <li tag = '12'></li>
-            <li tag = '13'></li>
-            <li tag = '14'></li>
-            <li tag = '15'></li>
-            <li tag = '16'></li>
-            <li tag = '17'></li>
-            <li tag = '18'></li>
-            <li tag = '19'></li>
-            <li tag = '20'></li>
-            <li tag = '21'></li>
-            <li tag = '22'></li>
-            <li tag = '23'></li>
-            <li tag = '24'></li>
-            <li tag = '25'></li>
-            <li tag = '26'></li>
-            <li tag = '27'></li>
-            <li tag = '28'></li>
-            <li tag = '29'></li>
-            <li tag = '30'></li>
-            <li tag = '31'></li>
-            <li tag = '32'></li>
-            <li tag = '33'></li>
-            <li tag = '34'></li>
-            <li tag = '35'></li>
-            <li tag = '36'></li>
-            <li tag = '37'></li>
-            <li tag = '38'></li>
-            <li tag = '39'></li>
-            <li tag = '40'></li>
-            <li tag = '41'></li>
-            <li tag = '42'></li>
-            <li tag = '43'></li>
-            <li tag = '44'></li>
-            <li tag = '45'></li>
-            <li tag = '46'></li>
-            <li tag = '47'></li>
-            <li tag = '48'></li>
-            <li tag = '49'></li>
-            <li tag = '50'></li>
-            <li tag = '51'></li>
-            <li tag = '52'></li>
-            <li tag = '53'></li>
-            <li tag = '54'></li>
-            <li tag = '55'></li>
-            <li tag = '56'></li>
-            <li tag = '57'></li>
-            <li tag = '58'></li>
-            <li tag = '59'></li>
-            <li tag = '60'></li>
-            <li tag = '61'></li>
-            <li tag = '62'></li>
-            <li tag = '63'></li>
-            <li tag = '64'></li>
-            <li tag = '65'></li>
-            <li tag = '66'></li>
-            <li tag = '67'></li>
-            <li tag = '68'></li>
-            <li tag = '69'></li>
-            <li tag = '70'></li>
-            <li tag = '71'></li>
-            <li tag = '72'></li>
-            <li tag = '73'></li>
-            <li tag = '74'></li>
-            <li tag = '75'></li>
-            <li tag = '76'></li>
-            <li tag = '77'></li>
-            <li tag = '78'></li>
-            <li tag = '79'></li>
-            <li tag = '80'></li>
-            <li tag = '81'></li>
+        <ul class="">
+            
         </ul>
     </div>
 </body>
 
 <script>
-    // 0 为未标记，1 为已点击，2 为已标记为雷
-    var stateDic = {};
-    var allData = [];
+    //外面确定行数、列数和雷的个数
+    function Mine(tr, td, mineNum) {
+        this.tr = tr; //行
+        this.td = td; //列
+        this.mineNum = mineNum; //雷的个数
 
-    var ulEle = document.getElementsByTagName('ul')[0];
-    ulEle.onmousedown = function (event) {
-        console.log (event);
-        //左键 event.button = 0 右键 event.button = 2
-        if(event.button == 0) {
-            let liEle = event.target;
-            if (stateDic[liEle.getAttribute("tag")] == null || stateDic[liEle.getAttribute("tag")] == 0) {
-                stateDic[liEle.getAttribute("tag")] = 1;
+        this.squares = []; //存储所有方块的数据，二维数组
+        this.lis = []; //存储所有DOM元素，可以是二维数组也可以是一维数组
+
+        this.surplusMine = mineNum; //剩余雷的个数
+        this.allRight = false; //表示是都全部正确
+        this.parent = document.getElementsByClassName('connect')[0];
+    }
+
+    Mine.prototype.creatView = function () {
+        //确定每个格子的宽和高以及边框
+        var width = 20;
+        var height = 20;
+        var borderWidth = 2;
+        //根据每个格子的宽高计算容器的大小
+        this.parent.style.width = (this.td * (width + borderWidth * 2)) + 'px';
+        this.parent.style.height = (this.tr * (height + borderWidth * 2)) + 'px';
+
+        //创建每个格子
+        var ulEle = document.getElementsByTagName('ul')[0];
+        ulEle.innerHTML = ""; //每次创建都清空
+        var allNum = this.tr * this.td;
+        for (let i = 0; i < allNum; i ++) {
+            var liEle = document.createElement('li'); 
+            liEle.innerHTML = "";
+            liEle.index = i;
+            this.lis.push(liEle);
+            ulEle.appendChild(liEle);
+        }
+
+        //点击事件
+        ulEle.onmousedown = function (event) {
+            if (event.button == 0){
+                //左键
+            } else if (event.button == 2) {
+                //右键
             }
-            updateLiStatus();
-        } else if(event.button == 2) {
-            let liEle = event.target;
-            if (stateDic[liEle.getAttribute("tag")] == null || stateDic[liEle.getAttribute("tag")] == 0) {
-                stateDic[liEle.getAttribute("tag")] = 2;
+        }
+
+        //取消右键菜单弹出
+        ulEle.oncontextmenu = function (e) {
+            return false;
+        }
+
+    }
+
+    //创造对应的数据
+    Mine.prototype.creatData = function () {
+        //先把雷的数据填入
+        var mineArray = this.randomNum();
+        var n = 0; 
+        for (let i = 0; i < this.tr; i++) {
+            this.squares[i] = []; //创建二维数组
+            for (let j = 0; j < this.td; j++) {
+                let data = {};
+                if (mineArray.indexOf(n) == -1) {
+                    //找不到则不是雷
+                    data.type = "number";
+                    data.x = i;
+                    data.y = j;
+                    data.value = 0;
+                } else {
+                    data.type = "mine";
+                    data.x = i;
+                    data.y = j;
+                }
+                this.squares[i].push(data);
+                n++;
             }
-            updateLiStatus();
+        }
+
+        //填充除了雷以外的value值
+        for(let i = 0; i < this.tr; i++){
+            for(let j = 0; j < this.td; j++) {
+                let data = this.squares[i][j];
+                if (data.type == "number") {
+                    let count = 0;
+                    if(j + 1 < this.td) {
+                        let temp1 = this.squares[i][j + 1];
+                        count = temp1.type == "mine" ? (count + 1) : count;
+                    }
+                    if(j - 1 >= 0) {
+                        let temp2 = this.squares[i][j - 1];
+                        count = temp2 == "mine" ? (count + 1) : count;
+                    }
+
+                    if(i + 1 < this.tr) {
+                        if (j - 1 >= 0) {
+                        let temp3 = this.squares[i + 1][j - 1];
+                        count = temp3 == "mine" ? (count + 1) : count;
+                        }
+                        if (j + 1 < this.td) {
+                            let temp4 = this.squares[i + 1][j + 1];
+                            count = temp4 == "mine" ? (count + 1) : count;
+                        }
+                        let temp5 = this.squares[i + 1][j];
+                        count = temp5 == "mine" ? (count + 1) : count;
+                    }
+                    if (i - 1 >= 0) {
+                        if (j - 1 >= 0) {
+                            let temp6 = this.squares[i - 1][j - 1];
+                            count = temp6 == "mine" ? (count + 1) : count;
+                        }
+                        if (j + 1 < this.td) {
+                            let temp7 = this.squares[i - 1][j + 1];
+                            count = temp7 == "mine" ? (count + 1) : count;
+                        }
+                        let temp8 = this.squares[i - 1][j];
+                        count = temp8 == "mine" ? (count + 1) : count;
+                    }
+                    data.value = count;
+                }
+            }
         }
     }
-    // ulEle.onclick = function (event) {
-    //     let liEle = event.target;
-    //     stateDic[liEle.getAttribute("tag")] = 1;
-    //     updateLiStatus();
-    //     console.log ('1111');
-    // }
-    //取消右键菜单弹出
-    ulEle.oncontextmenu = function (e) {
-        return false;
-    }
 
+    //生成 n 个不重复的数字，雷的位置数据
+    Mine.prototype.randomNum = function () {
+        var array = new Array(this.tr * this.td);//生成一个空数组
+        for (let i = 0; i < array.length; i++) {
+            array[i] = i;
+        }
+        //通过排序生成随机数
+        array.sort(function () {return 0.5-Math.random()});
+
+        return array.slice(0, this.mineNum);
+    }
     
-    //li数据，标记周边的雷个数 0没有，10为雷，先创建有雷的数据
-    allData.push([0,10,0,10,0,0,0,10,0]);
-    allData.push([0,10,0,0,0,10,0,0,0]);
-    allData.push([0,0,10,0,0,0,0,0,10]);
-    allData.push([0,0,10,0,10,0,0,0,0]);
-    allData.push([0,0,10,10,0,0,0,0,0]);
-    allData.push([0,0,10,0,0,10,0,0,0]);
-    allData.push([0,0,10,10,0,10,0,0,0]);
-    allData.push([0,0,0,0,10,10,0,0,0]);
-    allData.push([0,0,10,10,0,10,0,0,0]);
+    Mine.prototype.init = function () {
+        this.creatView();
+        this.creatData();
 
-    //更新雷周边的数据
-    for(let i = 0; i < allData.length; i++){
-        let childArray = allData[i];
-        for(let j = 0; j < childArray.length; j++) {
-            if(childArray[j] != 10) {
-                let count = 0;
-                
-                if(j + 1 < childArray.length) {
-                    let temp1 = childArray[j + 1];
-                    count = temp1 == 10 ? (count + 1) : count;
-                }
-                if(j - 1 >= 0) {
-                    let temp2 = childArray[j - 1];
-                    count = temp2 == 10 ? (count + 1) : count;
-                }
+        for (let i = 0; i < this.lis.length; i++) {
+            var liEle = this.lis[i];
+            var tag = liEle.index;
 
-                if(i + 1 < allData.length) {
-                    if (j - 1 >= 0) {
-                        let temp3 = allData[i + 1][j - 1];
-                        count = temp3 == 10 ? (count + 1) : count;
-                    }
-                    if (j + 1 < childArray.length) {
-                        let temp4 = allData[i + 1][j + 1];
-                        count = temp4 == 10 ? (count + 1) : count;
-                    }
-                    let temp5 = allData[i + 1][j];
-                    count = temp5 == 10 ? (count + 1) : count;
-                }
-                if (i - 1 >= 0) {
-                    if (j - 1 >= 0) {
-                        let temp6 = allData[i - 1][j - 1];
-                        count = temp6 == 10 ? (count + 1) : count;
-                    }
-                    if (j + 1 < childArray.length) {
-                        let temp7 = allData[i - 1][j + 1];
-                        count = temp7 == 10 ? (count + 1) : count;
-                    }
-                    let temp8 = allData[i - 1][j];
-                    count = temp8 == 10 ? (count + 1) : count;
-                }
-                childArray[j] = count;
-            }
-        }
-    }
+            let x = Math.floor(tag/this.td);
+            let y = tag%this.tr;
 
-    function updateLiStatus(){
-        var liEleArray = document.getElementsByTagName('li');
-        for (let i = 0; i < liEleArray.length; i++) {
-            let liEle = liEleArray[i];
-            let tag = liEle.getAttribute("tag");
-            let status = stateDic[tag];
-            if (status == null || status == 0) {
-                liEle.style.backgroundColor = 'blue';
-            } else if(status == 1) {
-                let tagInt = parseInt(tag) - 1;
-                let a = Math.floor(tagInt/allData.length);
-                let b = tagInt%allData.length;
-                let count = allData[a][b];
+            var square = this.squares[x][y];
 
-                liEle.style.backgroundColor = 'white';
-                liEle.innerText = count;
-            } else if(status == 2) {
-                liEle.style.backgroundColor = 'red';
+            if (square.type == 'mine') {
+                liEle.innerHTML = '0';
+            } else {
+                liEle.innerHTML = square.value;
             }
         }
     }
     
-    updateLiStatus();
+    var mine = new Mine(9,9,10);
+    mine.init();
+    
 
 </script>
 </html>
