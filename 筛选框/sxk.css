@@ -1,0 +1,73 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    width: 400px;
+    border: 1px solid #cccccc;
+    margin: 100px auto;
+    border-radius: 4px;
+    
+}
+
+.wrapper .inputView {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+}
+
+.wrapper .inputView .inputContent{
+    padding: 10px 15px;
+    width: 150px;
+    border: 1px solid #cccccc;
+    margin-left: 30px;
+    border-radius: 5px;
+}
+
+.wrapper .inputView .btnView {
+    display: inline-block;
+}
+
+.wrapper .inputView .btnView button{
+    color: #38f;
+    border: none;
+    background-color: white;
+    outline: none;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.wrapper .inputView .btnView button.active {
+    background-color:  #38f;
+    color: white;
+}
+
+
+.wrapper .connect {
+    width: 100%;
+    margin-top: 10px;
+}
+.wrapper .connect ul {
+
+}
+
+.wrapper .connect ul li {
+    position: relative;
+    padding: 10px 0 10px 30px;
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+
+}
+
+.wrapper .connect ul li img{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+}
+
+.wrapper .connect ul li p{
+    margin-left: 50px;
+}
+
+
