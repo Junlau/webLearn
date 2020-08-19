@@ -4,8 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录框</title>
+    <link rel="stylesheet" href="./dlk.css">
 </head>
 <body>
-    
+    <div class="dlBtn">
+        登录
+    </div>
+    <!-- <div class="bgView">
+        <div class="loginView">
+            <div class="titleView">
+                <img src="https://passport.baidu.com/passApi/img/loginlogo.png" alt="">
+                <p>用户名密码登录</p>
+                <button class="closer">X</button>
+            </div>
+            <div class="inputView">
+                <input type="text" class="userName" placeholder="手机/邮箱/用户名">
+                <input type="text" class="password" placeholder="密码">
+            </div>
+            <div class="btnView">
+                <button class="loginButton">登录</button>
+                <a href="#" class="forgetButton">忘记密码？</a>
+            </div>
+        </div>
+    </div> -->
+
+    <script src="../Jquery/jquery.js"></script>
+    <script>
+        var flag = true;
+        $('.dlBtn').on('click',function(){
+            if(flag){
+                flag = false;
+                var str = '<div class="bgView">\
+                                <div class="loginView">\
+                                    <div class="titleView">\
+                                        <img src="https://passport.baidu.com/passApi/img/loginlogo.png" alt="">\
+                                        <p>用户名密码登录</p>\
+                                        <button class="closer">X</button>\
+                                    </div>\
+                                    <div class="inputView">\
+                                        <input type="text" class="userName" placeholder="手机/邮箱/用户名">\
+                                        <input type="text" class="password" placeholder="密码">\
+                                    </div>\
+                                    <div class="btnView">\
+                                        <button class="loginButton">登录</button>\
+                                        <a href="#" class="forgetButton">忘记密码？</a>\
+                                    </div>\
+                                </div>\
+                            </div>';
+
+                $('body').append($(str));
+                // $('.closer').on('click',function(){
+                //     $('.bgView').css('display','none');
+                // });
+            }
+            $('.bgView').css('display','block');
+            $('.closer').one('click',function(){
+                $('.bgView').css('display','none');
+            });
+        });
+    </script>
 </body>
 </html>
