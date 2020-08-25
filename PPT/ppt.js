@@ -2,8 +2,9 @@
 
 var ppt = {
     $wrapper: $('.wrapper'),
-    $slider: $('.slider'),
+    $slider: '',
     len:0,
+    lastIndex:undefined,
     nowIndex: 0,
     init: function(imageArray) {
         if(imageArray.length > 0){
@@ -47,20 +48,40 @@ var ppt = {
                       </div>'
 
         this.$wrapper.html(strList + strBtn + strLi);
+
+        this.$slider = $('.slider');
     },
     buildEvent: function(){
         var This = this;
         $('.btn-left').on('click',function(){
+            This.lastIndex = This.nowIndex;
             This.nowIndex > 0 ? This.nowIndex-- : This.nowIndex = This.len - 1;
-            console.log(This.nowIndex);
+            
+            This.$slider.eq(This.lastIndex).trigger('go');
+            This.$slider.eq(This.nowIndex).trigger('come');
         });
         $('.btn-right').on('click',function(){
+            This.lastIndex = This.nowIndex;
             This.nowIndex >= This.len - 1 ?  This.nowIndex = 0 : This.nowIndex++;
-            console.log(This.nowIndex);
+            This.$slider.eq(This.lastIndex).trigger('go');
+            This.$slider.eq(This.nowIndex).trigger('come');
         });
         $('.slider-order ul li').on('click',function(){
+            This.lastIndex = This.nowIndex;
             This.nowIndex = $(this).index();
-            console.log(This.nowIndex);
+            
+            if (This.lastIndex != This.nowIndex){
+                This.$slider.eq(This.lastIndex).trigger('go');
+                This.$slider.eq(This.nowIndex).trigger('come');
+            }
+        });
+        
+
+        this.$slider.on('go',function(){
+            $(this).fadeOut(300);
+        });
+        this.$slider.on('come',function(){
+            $(this).delay(300).fadeIn(300);
         });
     },
     
