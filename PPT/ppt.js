@@ -6,11 +6,14 @@ var ppt = {
     len:0,
     lastIndex:undefined,
     nowIndex: 0,
+    flag: true,
+    timer: null,
     init: function(imageArray) {
         if(imageArray.length > 0){
             this.len = imageArray.length;
             this.createDom(imageArray);
             this.buildEvent();
+            this.createTime();
         }
         
     },
@@ -22,7 +25,7 @@ var ppt = {
             let sliderString = '<div class="slider" style="background-image:url('+ele.bgImage+');">\
                                     <div class="title">\
                                         <h1>'+ele.title+'</h1>\
-                                        <p>'+ele.des+'/p>\
+                                        <p>'+ele.des+'</p>\
                                     </div>\
                                     <div class="image">\
                                         <img src="'+ele.image+'" alt="">\
@@ -54,36 +57,68 @@ var ppt = {
     buildEvent: function(){
         var This = this;
         $('.btn-left').on('click',function(){
-            This.lastIndex = This.nowIndex;
-            This.nowIndex > 0 ? This.nowIndex-- : This.nowIndex = This.len - 1;
-            
-            This.$slider.eq(This.lastIndex).trigger('go');
-            This.$slider.eq(This.nowIndex).trigger('come');
+            if(This.flag) {
+                This.lastIndex = This.nowIndex;
+                This.nowIndex > 0 ? This.nowIndex-- : This.nowIndex = This.len - 1;
+                
+                This.totalFun();
+            }
         });
         $('.btn-right').on('click',function(){
-            This.lastIndex = This.nowIndex;
-            This.nowIndex >= This.len - 1 ?  This.nowIndex = 0 : This.nowIndex++;
-            This.$slider.eq(This.lastIndex).trigger('go');
-            This.$slider.eq(This.nowIndex).trigger('come');
+            if(This.flag) {
+                This.lastIndex = This.nowIndex;
+                This.nowIndex >= This.len - 1 ?  This.nowIndex = 0 : This.nowIndex++;
+                This.totalFun();
+            }
         });
         $('.slider-order ul li').on('click',function(){
-            This.lastIndex = This.nowIndex;
-            This.nowIndex = $(this).index();
-            
-            if (This.lastIndex != This.nowIndex){
-                This.$slider.eq(This.lastIndex).trigger('go');
-                This.$slider.eq(This.nowIndex).trigger('come');
+            if(This.flag) {
+                This.lastIndex = This.nowIndex;
+                This.nowIndex = $(this).index();
+                
+                This.totalFun();
             }
         });
         
 
         this.$slider.on('go',function(){
-            $(this).fadeOut(300);
+            $(this).fadeOut(300)
+                .find($('p')).animate({fontSize:'16px'}).end()
+                .find($('.image')).animate({width: '0%'});
         });
         this.$slider.on('come',function(){
-            $(this).delay(300).fadeIn(300);
+            $(this).delay(300).fadeIn(300)
+                .find($('p')).animate({fontSize:'20px'}).end()
+                .find($('.image')).animate({width: '40%'},function(){
+                    This.flag = true;
+                    This.createTime();
+                });
         });
     },
+    totalFun: function(){
+        //加锁
+        if (this.lastIndex != this.nowIndex){
+            clearTimeout(this.timer);
+            this.flag = false;
+            this.changeOrder();
+            this.$slider.eq(this.lastIndex).trigger('go');
+            this.$slider.eq(this.nowIndex).trigger('come');
+        }
+    },
+    createTime: function(){
+        var This = this;
+        this.timer = setTimeout(function(){
+            if(This.flag) {
+                This.lastIndex = This.nowIndex;
+                This.nowIndex >= This.len - 1 ?  This.nowIndex = 0 : This.nowIndex++;
+                This.totalFun();
+            }
+        },3000);
+    },
+    changeOrder: function(){
+        $('.slider-order ul li.active').removeClass('active');
+        $('.slider-order ul li').eq(this.nowIndex).addClass('active');
+    }
     
 
 }
