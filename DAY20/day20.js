@@ -66,8 +66,15 @@ function move(direction) {
 }
 
 function changeOrder(index){
-    $('.img-order ul li.active').removeClass('active');
-    $('.img-order ul li').eq(index).addClass('active');
+    // $('.img-order ul li.active').removeClass('active');
+    // $('.img-order ul li').eq(index).addClass('active');
+    let order = document.getElementsByClassName('img-order')[0];
+    let liActive = order.getElementsByClassName('active')[0];
+    liActive.className = '';
+    
+    let liIndex = order.getElementsByTagName('li')[index];
+    liIndex.className = 'active';
+
 }
 
 function creatTimeOut () {
