@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多级菜单-平铺</title>
+    <link rel="stylesheet" href="./menu-2.css">
+</head>
+<body>
+
+    <nav class="flyout-nav">
+        <ul>
+            <li>
+                <a href="#"><span class="label">File</span></a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="label">New Tab</span>
+                            <span class="shortcut">⌘T</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">New Window</span>
+                            <span class="shortcut">⌘N</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">New Incognito Window</span>
+                            <span class="shortcut">⇧⌘N</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Re-open Closed Tab</span>
+                            <span class="shortcut">⇧⌘T</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Open File...</span>
+                            <span class="shortcut">⌘O</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Open Location...</span>
+                            <span class="shortcut">⌘L</span>
+                        </a>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Close Window</span>
+                            <span class="shortcut">⇧⌘W</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Close Tab</span>
+                            <span class="shortcut">⌘W</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Save Page As...</span>
+                            <span class="shortcut">⌘S</span>
+                        </a>
+                    </li>
+                    <li class="separator"></li>
+                    <li class="has-children">
+                        <a href="#">
+                            <span class="label">Share</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <span class="label">✉️ Email</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="label">💬 Messages</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="label">📒 Notes</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="label">⏰ Reminders</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="label">🗓 Calender</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Print...</span>
+                            <span class="shortcut">⌘P</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="label">Edit</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="label">Undo</span>
+                            <span class="shortcut">⌘Z</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Redo</span>
+                            <span class="shortcut">⇧⌘Z</span>
+                        </a>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Cut</span>
+                            <span class="shortcut">⌘X</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Copy</span>
+                            <span class="shortcut">⌘C</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Paste</span>
+                            <span class="shortcut">⌘V</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Select All</span>
+                            <span class="shortcut">⌘A</span>
+                        </a>
+                    </li>
+                    <li class="separator"></li>
+                    <li class="has-children">
+                        <a href="#">
+                            <span class="label">Find</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <span class="label">Search the Web...</span>
+                                    <span class="shortcut">⌥⌘F</span>
+                                </a>
+                            </li>
+                            <li class="separator"></li>
+                            <li>
+                                <a href="#">
+                                    <span class="label">Find</span>
+                                    <span class="shortcut">⌘F</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="label">Find Next</span>
+                                    <span class="shortcut">⌘G</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="label">Find Previous</span>
+                                    <span class="shortcut">⇧⌘G</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="label">Use Selection For Find</span>
+                                    <span class="shortcut">⌘E</span>
+                                </a>
+                            </li>
+                            <li class="disabled">
+                                <a href="#">
+                                    <span class="label">Jump to Selection</span>
+                                    <span class="shortcut">⌘J</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <a href="#">
+                            <span class="label">Spelling and Grammar</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <span class="label">Show Spelling and Grammar</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="label">Check Document Now</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="label">Check Spelling While Typing</span>
+                                </a>
+                            </li>
+                            <li class="disabled">
+                                <a href="#">
+                                    <span class="label">Check Grammar While Typing</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <a href="#">
+                            <span class="label">Speech</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <span class="label">Start Speaking</span>
+                                </a>
+                            </li>
+                            <li class="disabled">
+                                <a href="#">
+                                    <span class="label">Stop Speaking</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="label">View</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <input type="checkbox" id="alwaysShowBookmarksBar" checked="true" />
+                            <label class="label" for="alwaysShowBookmarksBar">Always Show Bookmarks Bar</label>
+                            <span class="shortcut">⇧⌘B</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <input type="checkbox" id="alwaysShowToolbar" />
+                            <label class="label" for="alwaysShowToolbar">Always Show Toolbar in Fullscreen</label>
+                            <span class="shortcut">⇧⌘F</span>
+                        </a>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Stop</span>
+                            <span class="shortcut">⌘.</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Reload This Page</span>
+                            <span class="shortcut">⌘R</span>
+                        </a>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Exit Fullscreen</span>
+                            <span class="shortcut">^⌘F</span>
+                        </a>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Zoom In</span>
+                            <span class="shortcut">⌘+</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Zoom Out</span>
+                            <span class="shortcut">⌘-</span>
+                        </a>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Cast...</span>
+                        </a>
+                    </li>
+                    <li class="separator"></li>
+                    <li class="has-children">
+                        <a href="#">
+                            <span class="label">Developer</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <span class="label">View Source</span>
+                                    <span class="shortcut">⌥⌘U</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="label">Developer Tools</span>
+                                    <span class="shortcut">⌥⌘I</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="label">History</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="label">Home</span>
+                            <span class="shortcut">⇧⌘H</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Back</span>
+                            <span class="shortcut">⌘[</span>
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a href="#">
+                            <span class="label">Forward</span>
+                            <span class="shortcut">⌘]</span>
+                        </a>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Show Full History...</span>
+                            <span class="shortcut">⌘Y</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="label">Bookmarks</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="label">Bookmark Manager</span>
+                            <span class="shortcut">⌥⌘B</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Bookmark This Page</span>
+                            <span class="shortcut">⌘D</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Bookmark All Pages...</span>
+                            <span class="shortcut">⇧⌘D</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="label">Window</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="label">Minimize</span>
+                            <span class="shortcut">⌘M</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Zoom</span>
+                        </a>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Downloads</span>
+                            <span class="shortcut">⇧⌘J</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Extensions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Task Manager</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="label">Help</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="label">Search</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">Report an Issue...</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>
