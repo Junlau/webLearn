@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RequestAnimationFrame</title>
+    <style>
+        .box {
+            position: absolute;
+            top: 100px;
+            left: 0px;
+            background-color: red;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <script>
+        let ele = document.getElementsByClassName('box')[0];
+        window.requestAnimFrame = (function(){
+            return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callBack) {
+                //只执行一次
+                return window.setTimeout(callBack,1000/60);
+            };  
+        })();
+        window.cancelAnimFrame = (function(){
+            return window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || function (id) {
+                window.clearTimeout(id);
+            }
+        })();
+    
+        let req = null;
+        function move () {
+            ele.style.left = ele.offsetLeft + 10 + 'px';
+            if (ele.offsetLeft >= 300) {
+                console.log(111);
+                cancelAnimFrame(req);
+            } else {
+                console.log(222);
+                req = requestAnimFrame(move);
+            }
+        }
+        move();
+
+        // var req = null;
+        // function move () {
+        //     ele.style.left = ele.offsetLeft + 10 + 'px';
+        //     req = setTimeout(function(){
+        //         move();
+        //     },10);
+        //     if (ele.offsetLeft >= 300) {
+        //         console.log(111);
+        //         clearTimeout(req);
+        //     } 
+        //     console.log(222);
+        // }
+        // move();
+    </script>
+</body>
+</html>

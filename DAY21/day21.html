@@ -46,17 +46,16 @@
         }
 
         .test {
-            width: 60px;
+            width: 100%;
             height: 60px;
             border: 1px solid #333;
-        }
-
-        .test a {
-            white-space: nowrap;
+            display: flex;
+            justify-content: start;
         }
 
         .abg {
             background: red;
+            white-space: nowrap;
         }
 
     </style>
@@ -69,7 +68,7 @@
     </div>
 
     <!-- 测试 a 标签自动换行 -->
-    <div class="test"><div class="abg"><a href="#">测试测试测试测试测试测试测试测试</a></div></div>
+    <div class="test"><ul class="abg"><li><a href="#">测试测试测试测试测试测试测试测试</a></li></ul</div>
 
     <script>
         var a = {age : 10};
