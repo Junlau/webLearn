@@ -311,6 +311,19 @@
     }
 
 
+    //自己实现模板字符串功能，采用正则
+    //正则一 /\$\{([^}]*)\}/g       [^}]表示非}的所以字符 *表示多次，()分组 g全局
+    //正则二 /\$\{(.*?)\}/g         .除换行以外的所有字符，*匹配多次 ?零次或一次匹配
+    let name = 'lj';
+    let time = '5';
+    let str = '${name}学习 web 时间${time}月';
+    str = str.replace(/\$\{([^}]*)\}/g,function(match, key){
+        console.log(arguments);
+        let keyStr = key.trim();
+        //eval() 函数可计算某个字符串,并执行其中的的 JavaScript 代码
+        return eval(keyStr);
+    })
+    console.log(str);
 
 
 
