@@ -327,6 +327,53 @@
 
 
 
+    //虚拟 DOM，根据对象结构生成 DOM结构
+    //tarageName 标签名，prop 属性，children DOM子类
+    function vElement (targetName, prop, children) {
+        if(!(this instanceof vElement)) {
+            return new vElement(targetName, prop, children);
+        }
+        this.targetName = targetName;
+        if(Object.prototype.toString.call(prop) === '[object Array]') {
+            this.childArray = prop;
+            this.prop = {};
+        } else {
+            this.prop = prop;
+        }
+        this.children = children;
+        let count = 0;
+        this.children.forEach(child => {
+            if(child instanceof vElement) {
+                count = count + child.count;
+            }
+            count++;
+        });
+        this.count = count;
+    }
+    vElement.prototype.render = function () {
+        let el = document.createElement(this.targetName);
+        let children = this.children;
+        let prop = this.prop;
+        for(let item in prop){
+            let curProp = prop[item];
+            el.setAttribute(item, curProp);
+        }
+        children.forEach(function(child, index){
+            let domChild = null;
+            if(child instanceof vElement) {
+                domChild = child.render();
+            } else {
+                domChild = document.createTextNode(child);
+            }
+            el.appendChild(domChild);
+        })
+        return el;
+    }
+    var dom = vElement('div',{class:'demo'},['hello word',vElement('p',{class:'demo2'},['我是p标签'])]);
+    console.log(dom.render());
+
+
+
 
 </script>
 </html>
