@@ -29,7 +29,9 @@ module.exports = {
                 })
             },
             //以..jpg|png|gif|svg结尾的文件，使用url-loader进行解析，8kb以内为base64字符串，大于8kb则输出到publicPath文件夹，以原文件名命名
-            {test: /.jpg|png|gif|svg/, use: ['url-loader?limit=8192&name=/[name].[ext]']}
+            {test: /.jpg|png|gif|svg/, use: ['url-loader?limit=8192&name=/[name].[ext]']},
+            //less编译
+            {test: /.less$/, use: ['style-loader','css-loader','less-loader']}
         ]
     },
     //插件 
