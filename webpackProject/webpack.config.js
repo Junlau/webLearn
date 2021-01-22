@@ -6,7 +6,7 @@ module.exports = {
     //入口文件,多个文件使用{}
     entry: {
         index: './src/js/index.js',
-        // goodsInfo: './src/js/goodsInfo.js',
+        goodsInfo: './src/js/goodsInfo.js',
     },
     //生成的输出文件,
     output: {
