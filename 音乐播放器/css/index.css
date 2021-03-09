@@ -1,0 +1,15 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+    font-size: 12px;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0,0.2);
+    padding-top: 60px;
+    box-sizing: border-box;
+}
+
