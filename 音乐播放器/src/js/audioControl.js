@@ -15,6 +15,9 @@
         getAudio:function(src) {
             this.audio.src = src;
             this.audio.load();
+        },
+        setTime:function(time) {
+            this.audio.currentTime = time;
         }
     }
     root.audioControl = audioControl;

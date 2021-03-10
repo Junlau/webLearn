@@ -12,6 +12,7 @@ function bindEvent () {
         audioControl.getAudio(info.audio);
         if(audioControl.status == 'play'){
             audioControl.play();
+            root.process.start();
         }
     });
 
@@ -44,11 +45,43 @@ function bindEvent () {
     $('.play-btn').on('click',function (){
         if(audioControl.status == 'play'){
             audioControl.pause();
+            root.process.stop();
         }else if(audioControl.status == 'pause'){
             audioControl.play();
+            root.process.start(0);
         }
         renderPlayButton(audioControl.status);
     });
+
+    //禁止父视图拖动
+    $("html,body").css("overflow","hidden").css("height","100%");
+}
+
+function bindTouch() {
+    //获取控件 frame
+    let offset = $('.pro-wrapper').offset();
+    let left = offset.left;
+    let width = offset.width;
+    $('.slider-pointer').on('touchstart',function(){
+        //拖拽开始就暂停播放
+        root.process.stop();
+    }).on('touchmove',function(e){
+        let x = e.changedTouches[0].clientX;
+        let per = (x - left)/width; //计算拖动距离占比
+        if(per < 0 || per > 1) {
+            per = 0;
+        }
+        root.process.updata(per);
+    }).on('touchend',function(e){
+        let x = e.changedTouches[0].clientX;
+        let per = (x - left)/width; //计算拖动距离占比
+        if(per < 0 || per > 1) {
+            per = 0;
+        }
+        let curTime = per * requestData[chooseIndex].duration;
+        audioControl.setTime(curTime);
+        root.process.move(per);
+    })
 }
 
 function getData(url) {
@@ -82,6 +115,7 @@ function render(info) {
     $('.song-info').html(html);
 
     renderLikeButton(info.isLike);
+    root.process.renderAllTime(info.duration);
 }
 
 function renderLikeButton(isLike) {
@@ -102,3 +136,4 @@ function renderPlayButton(status) {
 
 getData("../source/data.json");
 bindEvent();
+bindTouch();
