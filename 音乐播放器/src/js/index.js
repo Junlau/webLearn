@@ -55,6 +55,7 @@ function bindEvent () {
 
     //禁止父视图拖动
     $("html,body").css("overflow","hidden").css("height","100%");
+    
 }
 
 function bindTouch() {
