@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>虚拟DOM</title>
+</head>
+<body>
+    <script>
+        /*
+         * tagName 标签名
+         * prop    属性值
+         * children 子标签
+         */
+        function vElement(tagName,prop,children) {
+            if (!(this instanceof vElement)) {
+                //防止直接调用vElement()，不返回vElement对象
+                return new vElement(tagName,prop,children);
+            }
+            if (Object.prototype.toString.call(prop) === "[object Array]") {
+                //防止不传prop，直接传children，children类型是数组
+                children = prop;
+                prop = {};
+            }
+            this.tagName = tagName;
+            this.prop = prop;
+            this.children = children;
+            let count = 0;
+            this.children.forEach(element => {
+                if(element instanceof vElement) {
+                    count = count + element.count;
+                }
+                count++;
+            });
+            this.count = count;
+        }
+
+        //渲染
+        vElement.prototype.render = function () {
+            let el = document.createElement(this.tagName);
+            let children = this.children;
+            let prop = this.prop;
+            for(let item in prop) {
+                let curProp = prop[item];
+                el.setAttribute(item,curProp);
+            }
+            children.forEach(function(child,index){
+                let childItem = null;
+                if(child instanceof vElement) {
+                    childItem = child.render();
+                } else {
+                    childItem = document.createTextNode(child);
+                }
+                el.appendChild(childItem);
+            })
+            return el;
+        }
+
+        let dom = vElement('div',{class:"demo",id:"demo1"},["hello world",vElement("p",{class:"demo2"},["我是P标签"])]);
+        console.log(dom.render());
+    </script>
+</body>
+</html>
