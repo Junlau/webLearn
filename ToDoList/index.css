@@ -4,6 +4,10 @@
     list-style: none;
 }
 
+body {
+    background-color: #eeeeee;
+}
+
 .page-Top {
     width: 100%;
     height: 44px;
@@ -27,3 +31,146 @@
     padding-top: 15px;
     padding-bottom: 15px;
 }
+
+.main .task-input {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #999999;
+}
+
+.main .task-count {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+}
+
+.main .task-count li {
+    flex: 1;
+    color: rgb(205, 68, 55);
+}
+
+.main .task-count .action {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main .tasks {
+    width: 100%;
+    background-color: white;
+}
+
+.main .tasks .no-task-tip{
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #999999;
+    padding: 10px;
+    box-sizing: border-box;
+    color: #999999;
+    font-size: 14px;
+}
+
+.main .tasks .todo-list{
+    width: 100%;
+    font-size: 14px;
+}
+
+.main .tasks .todo-list .list{ 
+    width: 100%;
+    height: 40px;
+}
+
+.main .tasks .todo-list .list .view{ 
+    width: 100%;
+    border-bottom: 1px solid #999999;
+}
+
+.main .tasks .todo-list .list .view label{ 
+    line-height: 40px;
+}
+
+.view .toggle {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    vertical-align:text-top;
+}
+
+.list .deleteView {
+    text-decoration: line-through;
+    color: #999999;
+}
+
+.main .tasks .todo-list .list .edit{ 
+    width: calc(100% - 30px); /*计算宽度*/
+    height: 40px;
+    margin-left: 30px;
+    box-sizing: border-box;
+    display: none;
+}
+
+
+/*
+<label class="label">
+    <span>Febuary</span>
+    <input type="checkbox" checked="checked" class="checkbox">
+    <span class="check-mark"></span>
+</label>
+
+.label {
+    position: relative;
+    font-family: sans-serif;
+    display: block;
+    padding-left: 60px;
+    font-size: 22px;
+    user-select: none;
+    margin: 30px 30px;
+}
+label {
+    cursor: default;
+}
+
+.label .checkbox {
+    display: none;
+}
+.label input[type="checkbox" i] {
+    background-color: initial;
+    cursor: default;
+    appearance: auto;
+    box-sizing: border-box;
+    margin: 3px 3px 3px 4px;
+    padding: initial;
+    border: initial;
+}
+
+.label .checkbox:checked + .check-mark:after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    transition: .1s;
+    height: 5px;
+    background: #9691F4;
+    top: 45%;
+    left: 50%;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: translate(-50%, -50%) rotate(
+-45deg
+);
+}
+
+.label .checkbox:checked + .check-mark {
+    background-color: #9691F4;
+    transition: .1s;
+}
+.label .check-mark {
+    width: 30px;
+    height: 30px;
+    background-color: #E9F1FA;
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    top: 0;
+    border-radius: 50%;
+}
+*/
