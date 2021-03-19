@@ -15,7 +15,7 @@
     </div>
     <div class="main">
         <h3 class="big-title">添加任务：</h3>
-        <input type="text" class="task-input">
+        <input type="text" class="task-input" v-model="inputValue" v-on:keyup.enter="addTodo">
         <ul class="task-count">
             <li>0个任务未完成</li>
             <li class="action">
@@ -28,16 +28,18 @@
         <div class="tasks">
             <span class="no-task-tip">未添加任何任务</span>
             <ul class="todo-list">
-                <li class="list">
-                    <div class="view">
-                        <input type="checkbox" class="toggle">
-                        <label>吃饭</label>
-                        <button class="destroy"></button>
+                <li class="list" v-for="item in list">
+                    <div class="view" v-bind:class="{deleteView:item.checked,hiddle:curTodo===item}">
+                        <input type="checkbox" class="toggle" v-model="item.checked">
+                        <label @dblclick="editTodo(item)">{{item.title}}</label>
+                        <button class="destroy" v-on:click="deleteButtonPressed(item)">x</button>
                     </div>
-                    <input type="text" class="edit">
+                    <input type="text" class="edit" v-model="item.title" v-on:keyup.enter="editFinish" v-on:blur="editFinish" v-bind:class="{editing:curTodo===item}" v-focus="curTodo===item">
                 </li>
             </ul>
         </div>
-    </div>    
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="./index.js"></script>    
 </body>
 </html>
