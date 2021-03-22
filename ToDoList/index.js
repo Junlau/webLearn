@@ -1,16 +1,60 @@
-var list = [{
-    title : "吃饭",
-    checked : true
-},{
-    title : "睡觉",
-    checked : false
-}];
-new Vue({
+var setLocal = {
+    save(key,value){
+        localStorage.setItem(key,JSON.stringify(value));
+    },
+    get(key){
+        return JSON.parse(localStorage.getItem(key));
+    }
+}
+
+var list = setLocal.get("todo") || [];
+
+var vm = new Vue({
     el:".main",
+    //监听函数
+    watch:{
+        //直接监听
+        // list : function () {
+        //     setLocal.save("todo",this.list);
+        // }
+
+        //深层次监听
+        list : {
+            deep : true,
+            handler: function(){
+                setLocal.save("todo",this.list);
+            }
+        }
+    },
     data:{
         list : list,
         inputValue : "",
-        curTodo: ""
+        curTodo: "",
+        visibility:"all"
+    },
+    computed:{
+        nofinishNumber(){
+            let num = 0;
+            for(let i=0; i < this.list.length; i++){
+                if(!list[i].checked) {
+                    num++;
+                }
+            }
+            return num;
+        },
+        filterList(){
+            if(this.visibility === "all") {
+                return this.list;
+            } else if(this.visibility === "finish") {
+                return this.list.filter(function(item){
+                    return item.checked;
+                })
+            } else if(this.visibility === "unfinish") {
+                return this.list.filter(function(item){
+                    return !item.checked;
+                })
+            }
+        }
     },
     methods:{
         addTodo(event) {
@@ -41,3 +85,11 @@ new Vue({
         }   
     }
 })
+
+function hashChange () {
+    vm.visibility = window.location.hash.slice(1);
+}
+
+window.addEventListener("hashchange",hashChange);
+
+hashChange();
