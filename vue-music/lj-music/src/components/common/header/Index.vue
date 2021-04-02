@@ -1,0 +1,236 @@
+<template>
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html"></a>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <router-link :to="{name:'home'}" tag="a">发现音乐</router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name:''}" tag="a">排行榜</router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name:''}" tag="a">歌单</router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name:''}" tag="a">歌手</router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name:''}" tag="a">视频</router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name:''}" tag="a">MV</router-link>
+                    </li>
+                </ul>
+            </div>
+            <div class="search">
+                <i class="iconfont nicesearch-o"></i>
+            </div>
+            <div class="login">
+                <div class="line"></div>
+                <div class="no-login">登录</div>
+            </div>
+            <div class="search-wrap">
+                <div class="overlay"></div>
+                <div class="search-body">
+                    <div class="search-content">
+                        <div class="search-top">
+                            <input
+                                type="text"
+                                placeholder="请输入搜索关键词并按回车键…"
+                            />
+                        </div>
+                        <div class="search-hot">
+                            <div class="title">
+                                <i class="iconfont niceremensousuo"></i>
+                                <span>热门搜索</span>
+                            </div>
+                            <ul class="tags">
+                                <li v-for="item in hots" :key="item.first">
+                                    {{item.first}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="btn-close">
+                        <span class="close-light"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    data () {
+        return {
+            keyword: '',
+            hots: [{first: '挖红薯的拉黑'}, {first: '挖红薯的拉黑'}, {first: '挖红薯的拉黑'}]
+        }
+    }
+}
+</script>
+
+<style>
+.header {
+    width: 100%;
+    height: 70px;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    /*阴影*/
+    box-shadow: 0px 5px 40px -1px rgba(2, 10, 18, 0.1);
+}
+
+.container {
+  max-width: 1380px;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.logo {
+    width: 146px;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.logo a {
+    width: 100%;
+    display: block;
+    height: 70px;
+    background-image: url(../../../assets/images/logo_black.png);
+    background-repeat: no-repeat;
+    background-size: 146px 26px;
+    background-position: 0px center;
+}
+
+.nav {
+    flex: 1 1 auto;
+}
+
+.nav li {
+    list-style: none;
+    display: inline-block;
+    font-size: 14px;
+    height: 100%;
+    padding: 0 15px;
+}
+
+.nav li a {
+    position: relative;
+    text-decoration: none;
+}
+
+.nav li .router-link-active {
+    color: #fa2800;
+}
+
+.nav li .router-link-active::after {
+    content: "";
+    position: absolute;
+    background-color: #fa2800;
+    left: 0;
+    right: 0;
+    bottom: -12px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    margin: 0 auto;
+    opacity: 1;
+}
+
+.search {
+    display: flex;
+    height: 100%;
+}
+
+.search i {
+    font-size: 22px;
+    color: #161e27;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.login {
+    display: flex;
+    /* align-items: center; */
+    cursor: pointer;
+    position: relative;
+    padding-left: 20px;
+}
+
+.login .line {
+    width: 1px;
+    height: 22px;
+    background: #e1e1e1;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -11px;
+}
+
+.login .no-login {
+    font-size: 14px;
+}
+
+.login .no-login:hover {
+    color: #fa2800;
+}
+
+.search-wrap {
+    /* fixed 脱离了 flex */
+    position: fixed;
+    justify-content: center;
+    align-items:center;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+
+.search-wrap .overlay {
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background: rgba(120, 129, 147, .22);
+    opacity: 1;
+    transition: opacity .3s;
+}
+
+.search-wrap .search-body {
+    position: relative;
+    opacity: 1;
+    width: 100%;
+    max-width: 790px;
+    justify-content: center;
+}
+
+.search-wrap .search-body .search-content {
+    background-color: #fff;
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 0 10px 50px -5px rgba(6, 39, 67, 0.12);
+    padding: 0;
+    border: 0;
+    width: 100%;
+    overflow: hidden;
+    height: 100px;
+    margin: 0 auto;
+}
+
+</style>

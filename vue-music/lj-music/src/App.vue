@@ -2,15 +2,19 @@
   <div id="app">
     <nice-header></nice-header>
     <router-view/>
-    <player-bar></player-bar>
+    <!-- <player-bar></player-bar>
     <nice-footer></nice-footer>
-    <back-top></back-top>
+    <back-top></back-top> -->
   </div>
 </template>
 
 <script>
+import NiceHeader from '@/components/common/header/Index'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    NiceHeader
+  }
 }
 </script>
 
