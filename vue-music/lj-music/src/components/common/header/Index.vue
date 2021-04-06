@@ -26,22 +26,26 @@
                     </li>
                 </ul>
             </div>
-            <div class="search">
+            <div class="search" v-on:click="searchButtonPressed">
                 <i class="iconfont nicesearch-o"></i>
             </div>
             <div class="login">
                 <div class="line"></div>
                 <div class="no-login">登录</div>
             </div>
-            <div class="search-wrap">
-                <div class="overlay"></div>
+            <div class="search-wrap" v-if="searchshow" >
+                <div class="overlay" v-on:click="closeSearchWrapper"></div>
                 <div class="search-body">
                     <div class="search-content">
                         <div class="search-top">
-                            <input
+                            <div class="bg-effect"></div>
+                            <div class="search-form">
+                                <input
                                 type="text"
+                                class="text"
                                 placeholder="请输入搜索关键词并按回车键…"
                             />
+                            </div>
                         </div>
                         <div class="search-hot">
                             <div class="title">
@@ -55,7 +59,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="btn-close">
+                    <div class="btn-close" v-on:click="closeSearchWrapper">
                         <span class="close-light"></span>
                     </div>
                 </div>
@@ -69,7 +73,16 @@ export default {
     data () {
         return {
             keyword: '',
-            hots: [{first: '挖红薯的拉黑'}, {first: '挖红薯的拉黑'}, {first: '挖红薯的拉黑'}]
+            hots: [{first: '挖红薯的拉黑'}, {first: '挖红薯的拉黑'}, {first: '挖红薯的拉黑'}],
+            searchshow: false
+        }
+    },
+    methods: {
+        searchButtonPressed () {
+            this.searchshow = true
+        },
+        closeSearchWrapper () {
+            this.searchshow = false
         }
     }
 }
@@ -193,6 +206,7 @@ export default {
 .search-wrap {
     /* fixed 脱离了 flex */
     position: fixed;
+    display: flex;
     justify-content: center;
     align-items:center;
     width: 100%;
@@ -229,8 +243,118 @@ export default {
     border: 0;
     width: 100%;
     overflow: hidden;
-    height: 100px;
-    margin: 0 auto;
+}
+
+.search-wrap .search-body .search-content .search-top {
+    position: relative;
+    overflow: hidden;
+    padding: 3rem;
+}
+
+.search-wrap .search-body .search-content .bg-effect {
+    background-image: url(../../../assets/images/personal.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    filter: blur(8px);
+    transform: scale(1.05);
+    background-position: center;
+}
+
+.search-wrap .search-body .search-content .search-top .search-form {
+    position: relative;
+    padding: 3rem 0;
+}
+
+.search-wrap .search-body .search-content .search-top .search-form .text{
+    width: 100%;
+    height: calc(1.5em + 1.71875rem + 2px);
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 5px;
+    border-color: transparent;
+    color: #fff;
+}
+
+.search-wrap .search-body .search-content .search-top .search-form .text:focus {
+    background-color: rgba(255, 255, 255, 0.04);
+    outline: 1px solid transparent;
+}
+
+.search-wrap .search-body .search-content .search-top .search-form .text:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-color: transparent;
+}
+
+.search-wrap .search-body .search-content .search-top .search-form .text::placeholder {
+    color: #fff;
+    opacity: 1
+}
+
+.search-hot {
+    padding: 1.5rem 3rem;
+}
+
+.search-hot .title {
+    margin-bottom: 15px;
+}
+
+.search-hot .title i{
+    color: #fa2800;
+    font-size: 1.625rem;
+    margin-right: 8px;
+}
+.search-hot .title span{
+    font-size: 15px;
+}
+
+.search-hot .tags{
+    width: 100%;
+    margin: 0 -0.25rem;
+    padding: 0;
+}
+
+.search-hot .tags li {
+    list-style: none;
+    display: inline-block;
+    padding: 0.25rem;
+    margin: 0.25rem;
+    cursor: pointer;
+    background-color: #f4f4f5;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 400;
+    color: #6D7685;
+    border-radius: 4px;
+    font-size: .75rem;
+}
+
+.search-hot .tags li:hover {
+    color: #161E27;
+}
+
+.btn-close {
+    position: absolute;
+    bottom: -50px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-close .close-light {
+    display: inline-block;
+    background-image: url('../../../assets/images/close.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    width: 28px;
+    height: 28px;
 }
 
 </style>
