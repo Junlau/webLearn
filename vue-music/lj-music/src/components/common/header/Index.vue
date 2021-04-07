@@ -73,16 +73,28 @@ export default {
     data () {
         return {
             keyword: '',
-            hots: [{first: '挖红薯的拉黑'}, {first: '挖红薯的拉黑'}, {first: '挖红薯的拉黑'}],
+            hots: [],
             searchshow: false
         }
     },
     methods: {
         searchButtonPressed () {
+            console.log('11111')
             this.searchshow = true
+            this.getSearchHot()
         },
         closeSearchWrapper () {
             this.searchshow = false
+        },
+        async getSearchHot () {
+            try {
+                let res = await this.$api.getSearchHot()
+                if (res.code === 200) {
+                    this.hots = res.result.hots
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 }
