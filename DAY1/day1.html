@@ -17,6 +17,22 @@
         window.onload = function() {
             console.log("window loaded");
         }
+
+        var removeDuplicates = function(nums) {
+            let length = nums.length;
+            for(let i = 1; i < nums.length; i++) {
+                if(i+1 > nums.length) {
+                    break;
+                }
+                if (nums[i - 1] === nums[i] && nums[i] === nums[i+1]) {
+                    nums.splice(i,1);
+                    i--;
+                    length--;
+                }
+            }
+            return nums;
+        };
+        console.log(removeDuplicates([1,1,1,2,2,3]));
     </script>
 </head>
 <body>
