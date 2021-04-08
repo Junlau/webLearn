@@ -1,6 +1,11 @@
 import api from './instance'
 
 /**
+ * @method 获取轮播图
+ */
+ export const getBanner = () => api.get('/banner', {})
+
+/**
  * @method 获取热搜列表
  */
  export const getSearchHot = () => api.get('/search/hot', {})
