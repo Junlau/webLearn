@@ -19,5 +19,12 @@ export default {
 </script>
 
 <style>
-
+.container {
+  max-width: 1380px;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
 </style>

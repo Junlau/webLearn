@@ -1,13 +1,11 @@
 <template>
     <div class="banner">
-        <swiper :options="swiperOption"
-        v-show="bannersInit"
-        @slideChangeTransitionEnd="onSwiperSlideChangeTransitionEnd">
+        <swiper class="swiper" :options="swiperOption" v-if="bannersInit">
             <swiper-slide v-for="item in banners" :key="item.imageUrl">
                 <img :src="item.imageUrl" :alt="item.typeTitle">
             </swiper-slide>
-            <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
+        <div class="swiper-pagination" slot="pagination"></div>
     </div>
 </template>
 
@@ -23,13 +21,10 @@ export default {
                 slidesPerGroup: 3,
                 loop: true,
                 loopFillGroupWithBlank: true,
-                centeredSlides: true,
                 paginationClickable: true,
                 grabCursor: true,
-                pagination: '.swiper-pagination',
-                slideChangeTransitionEnd: swiper => {
-                        // 这个位置放swiper的回调方法
-                        console.log('123')
+                pagination: {
+                        el: '.swiper-pagination'
                 }
             }
         }
@@ -47,16 +42,13 @@ export default {
         async getBanner () {
             try {
                 let data = await this.$api.getBanner()
-                console.log(data)
                 if (data.code === 200) {
-                    console.log(data)
+                    console.log(data.banners)
+                    this.banners = data.banners
                 }
             } catch (error) {
                 console.log(error)
             }
-        },
-        slideChangeTransitionEnd (a) {
-            console.log(a)
         }
     },
     mounted () {
@@ -66,11 +58,11 @@ export default {
 </script>
 
 <style>
-.banner >>> .swiper-pagination {
+.swiper-pagination {
   width: 100%;
   bottom: -20px;
 }
-.swiper-pagination-bullet {
+.swiper-pagination .swiper-pagination-bullet {
     width: 6px;
     height: 6px;
     background: #a3a3ac;
@@ -79,7 +71,7 @@ export default {
     margin: 0 5px;
 }
 
-.swiper-pagination-bullet-active {
+.swiper-pagination .swiper-pagination-bullet-active {
       opacity: 1;
       width: 15px;
       border-radius: 4px;
@@ -88,9 +80,11 @@ export default {
 
 .banner {
   position: relative;
+  width: 100%;
 }
 
 .banner img {
     border-radius: 3px;
+    width: 100%;
 }
 </style>
