@@ -22,3 +22,10 @@ import api from './instance'
      `/search?keywords=${keywords}&limit=${limit}&offset=${offset}&type=${type}`,
      {}
     )
+
+/**
+ * @method 获取推荐歌单
+ * @params limit 取出数量默认为 30
+ */
+ export const getPersonalized = limit =>
+ api.get(`/personalized?limit=${limit}`, {})

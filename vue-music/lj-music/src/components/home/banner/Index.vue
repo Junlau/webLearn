@@ -30,6 +30,7 @@ export default {
         }
     },
     computed: {
+        // 使用 v-if主要是解决 swiper 动态数据渲染显示最后一页的问题
         bannersInit () {
             if (this.banners.length > 0) {
                 return true
@@ -79,8 +80,9 @@ export default {
 }
 
 .banner {
-  position: relative;
-  width: 100%;
+    position: relative;
+    width: 100%;
+    clear: both;
 }
 
 .banner img {
