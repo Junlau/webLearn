@@ -33,6 +33,83 @@
             return nums;
         };
         console.log(removeDuplicates([1,1,1,2,2,3]));
+
+        //链表
+        function ListNode(val, next) {
+            this.val = (val===undefined ? 0 : val)
+            this.next = (next===undefined ? null : next)
+        }
+
+        let a = new ListNode(1)
+        let c = a
+        for (let i = 1; i < 7; i++){
+            let num = i
+            if (i === 3) {
+                num = 2;
+            }
+            if (i > 4) {
+                num = i - 1;
+            }
+            let b = new ListNode(num + 1)
+            a.next = b
+            a = a.next
+        }
+
+        console.log (c)
+        //翻转链表
+        var turnLinklist = function (head) {
+            let header = new ListNode()
+            header.next = head;
+            let cur = head;
+            while (cur.next) {
+                let next = cur.next
+                cur.next = next.next
+                next.next = header.next
+                header.next = next
+            }
+            return header.next
+        }
+
+        //翻转链表迭代方法
+        var turnLinklist2 = function (head) {
+            let per = null
+            let cur = head
+            while (cur) {
+                let next = cur.next
+                cur.next = per
+                per = cur
+                cur = next
+            }
+            return per
+        }
+
+        //删除排序链表中的重复元素 II
+        var deleteDuplicates = function(head) {
+            let header = new ListNode()
+            header.next = head
+            let pre = header
+            let cur = head
+            let isrepeat = false
+            while (cur && cur.next) {
+                let next = cur.next
+                if (cur.val === next.val) {
+                    cur.next = next.next
+                    isrepeat = true
+                } else {
+                    if (isrepeat === true) {
+                        isrepeat = false
+                        pre.next = next
+                        cur = next
+                    } else {
+                        pre = cur
+                        cur = next
+                    }
+                }
+            }
+            return header
+        };
+
+        console.log(deleteDuplicates(c))
     </script>
 </head>
 <body>
