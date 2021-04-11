@@ -41,6 +41,8 @@
                             <div class="bg-effect"></div>
                             <div class="search-form">
                                 <input
+                                v-model="keyword"
+                                v-on:keyup.enter="search"
                                 type="text"
                                 class="text"
                                 placeholder="请输入搜索关键词并按回车键…"
@@ -73,16 +75,34 @@ export default {
     data () {
         return {
             keyword: '',
-            hots: [{first: '挖红薯的拉黑'}, {first: '挖红薯的拉黑'}, {first: '挖红薯的拉黑'}],
+            hots: [],
             searchshow: false
         }
     },
     methods: {
         searchButtonPressed () {
+            console.log('11111')
             this.searchshow = true
+            this.getSearchHot()
         },
         closeSearchWrapper () {
             this.searchshow = false
+        },
+        async getSearchHot () {
+            try {
+                let res = await this.$api.getSearchHot()
+                if (res.code === 200) {
+                    this.hots = res.result.hots
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        search () {
+            if (this.keyword.split(' ').join('').length !== 0) {
+                this.closeSearchWrapper()
+                console.log(this.keyword)
+            }
         }
     }
 }

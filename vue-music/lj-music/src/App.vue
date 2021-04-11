@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nice-header></nice-header>
-    <router-view/>
+    <router-view></router-view>
     <!-- <player-bar></player-bar>
     <nice-footer></nice-footer>
     <back-top></back-top> -->
