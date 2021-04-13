@@ -29,3 +29,8 @@ import api from './instance'
  */
  export const getPersonalized = limit =>
  api.get(`/personalized?limit=${limit}`, {})
+
+ /**
+ * @method 获取推荐歌单
+ */
+export const getNewSongs = () => api.get(`/personalized/newsong`, {})
