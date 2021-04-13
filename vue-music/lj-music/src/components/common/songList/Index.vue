@@ -124,10 +124,16 @@ export default {
     width: 15%;
     color: #333333;
     font-weight: bold;
+    box-sizing: border-box;
+    margin: 0;
 }
 
 .song-item .song-wrapper .info p {
-    display: inline-block;
+    margin: 0;
+}
+
+.song-item .song-wrapper .info .name {
+    margin-bottom: 10px;
 }
 
 .song-item .song-wrapper .info .author {
