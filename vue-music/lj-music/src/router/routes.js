@@ -24,6 +24,13 @@ export const appRouter = [
                 component: resolve => {
                     require(['@/views/search/Index.vue'], resolve)
                 }
+            },
+            {
+                path: '/rank',
+                name: 'rank',
+                component: resolve => {
+                    require(['@/views/rank/Index.vue'], resolve)
+                }
             }
         ]
 

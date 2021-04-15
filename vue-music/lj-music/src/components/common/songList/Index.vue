@@ -51,7 +51,6 @@ export default {
     },
     methods: {
         artistName (item) {
-            console.log(item)
             let name = ''
             item.song.artists.forEach(artist => {
                 name = name + '/' + artist.name
@@ -150,6 +149,9 @@ export default {
     color: #333333;
     font-weight: bold;
     margin-left: 80px;
+    flex: 1;
+    /* 允许单词内换行 */
+    word-break: break-all;
 }
 
 .song-item .song-wrapper .duration {
@@ -158,6 +160,7 @@ export default {
     font-weight: bold;
     padding-right: 30px;
     box-sizing: border-box;
+    margin-left: 80px;
 }
 
 </style>

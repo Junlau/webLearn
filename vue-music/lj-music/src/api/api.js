@@ -34,3 +34,8 @@ import api from './instance'
  * @method 获取推荐歌单
  */
 export const getNewSongs = () => api.get(`/personalized/newsong`, {})
+
+/**
+ * @method 获取排行榜内容摘要
+ */
+ export const getToplist = () => api.get(`/toplist/detail`, {})
