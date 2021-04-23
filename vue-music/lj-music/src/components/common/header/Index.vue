@@ -10,10 +10,10 @@
                         <router-link :to="{name:'home'}" tag="a">发现音乐</router-link>
                     </li>
                     <li>
-                        <router-link :to="{name:''}" tag="a">排行榜</router-link>
+                        <router-link :to="{name:'rank'}" tag="a">排行榜</router-link>
                     </li>
                     <li>
-                        <router-link :to="{name:''}" tag="a">歌单</router-link>
+                        <router-link :to="{name:'playlist'}" tag="a">歌单</router-link>
                     </li>
                     <li>
                         <router-link :to="{name:''}" tag="a">歌手</router-link>
@@ -81,7 +81,6 @@ export default {
     },
     methods: {
         searchButtonPressed () {
-            console.log('11111')
             this.searchshow = true
             this.getSearchHot()
         },
@@ -119,6 +118,7 @@ export default {
     right: 0;
     /*阴影*/
     box-shadow: 0px 5px 40px -1px rgba(2, 10, 18, 0.1);
+    z-index: 2000;
 }
 
 .container {
@@ -165,6 +165,7 @@ export default {
 .nav li a {
     position: relative;
     text-decoration: none;
+    color: #161e27;
 }
 
 .nav li .router-link-active {

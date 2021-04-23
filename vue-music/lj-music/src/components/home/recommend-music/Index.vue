@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import songList from '@/components/common/songList/Index'
+import songList from '@/components/common/songList/Index.vue'
 
 export default {
     data () {
@@ -16,10 +16,33 @@ export default {
     },
     components: {
         songList
+    },
+    methods: {
+        async getNewSongs () {
+            try {
+                let res = await this.$api.getNewSongs()
+                if (res.code === 200) {
+                    this.songs = res.result
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    },
+    mounted () {
+        this.getNewSongs()
     }
 }
 </script>
 
 <style>
+.recommend-music {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.recommend-music .title {
+    margin: 0 0 15px 0;
+}
 
 </style>

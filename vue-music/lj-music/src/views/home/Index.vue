@@ -2,14 +2,14 @@
     <div class="home-wrapper">
         <banner></banner>
         <recommend-songs></recommend-songs>
-        <!-- <recommend-music></recommend-music> -->
+        <recommend-music></recommend-music>
     </div>
 </template>
 
 <script>
 import Banner from '@/components/home/banner/Index'
 import RecommendSongs from '@/components/home/recommend-songs/Index'
-// import RecommendMusic from '@/components/home/recommend-music/Index'
+import RecommendMusic from '@/components/home/recommend-music/Index'
 export default {
     data () {
         return {
@@ -17,7 +17,7 @@ export default {
     },
     components: {
         Banner,
-        // RecommendMusic,
+        RecommendMusic,
         RecommendSongs
     }
 }

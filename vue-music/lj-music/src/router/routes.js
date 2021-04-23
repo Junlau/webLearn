@@ -11,7 +11,7 @@ export const appRouter = [
         component: Layout,
         children: [
             {
-                path: '/home',
+                path: 'home',
                 name: 'home',
                 // 这种写法是懒加载
                 component: resolve => {
@@ -19,10 +19,28 @@ export const appRouter = [
                 }
             },
             {
-                path: '/search',
+                path: 'search',
                 name: 'search',
                 component: resolve => {
                     require(['@/views/search/Index.vue'], resolve)
+                }
+            },
+            {
+                path: 'rank',
+                name: 'rank',
+                component: resolve => {
+                    require(['@/views/rank/Index.vue'], resolve)
+                }
+            },
+            {
+                path: 'playlist',
+                meta: {
+                    title: '歌单',
+                    keepAlive: true
+                },
+                name: 'playlist',
+                component: resolve => {
+                    require(['@/views/playlist/Index.vue'], resolve)
                 }
             }
         ]

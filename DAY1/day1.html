@@ -111,7 +111,6 @@
 
         console.log(deleteDuplicates(c))
 
-
  // Definition for a Node.
 function Node(val, next, random) {
     this.val = val;
@@ -265,6 +264,79 @@ LRUCache.prototype.put = function(key, value) {
  console.log('--- '+lru.get(1))
  console.log('--- '+lru.get(3))
  console.log('--- '+lru.get(4))
+
+
+    /*
+        [5],
+        [7, 8],
+        [2, 3, 4],
+    [4, 9, 6, 1],
+    [2, 7, 9, 4, 5]
+    求最上面到最下面的最短路径（数字之和）
+    */
+    //动态规划算法
+    //由上到下
+    var topToBottom = function (triangle) {
+        let number = new Array()
+        number[0] = triangle[0]
+        for (let i = 1; i < triangle.length; i++) {
+            let child = triangle[i]
+            let nChild = new  Array()
+            for (let j = 0; j < child.length; j++) {
+                if (j === 0) {
+                    nChild.push(child[j] + number[i-1][j])
+                } else if (j === child.length - 1) {
+                    nChild.push(child[j] + number[i-1][j-1])
+                } else {
+                    let a = child[j] + number[i-1][j-1]
+                    let b = child[j] + number[i-1][j]
+                    let c = a > b ? b : a
+                    nChild.push(c)
+                }
+            }
+            number[i] = nChild
+        }
+        
+        let minV = Number.MAX_SAFE_INTEGER
+        let lastValue = number[number.length - 1]
+        for (let i = 0; i < lastValue.length; i++) {
+            minV = minV < lastValue[i] ? minV : lastValue[i]
+        }
+        return minV
+    }
+
+    //由下到上
+    var bottomToTop = function (triangle) {
+        let number = new Array()
+        number[triangle.length - 1] = triangle[triangle.length - 1]
+        for (let i = triangle.length - 2; i >= 0; i--) {
+            let child = triangle[i]
+            let nChild = new  Array()
+            for (let j = 0; j < child.length; j++) {
+                let a = child[j] + number[i+1][j+1]
+                let b = child[j] + number[i+1][j]
+                let c = a > b ? b : a
+                nChild.push(c)  
+            }
+            number[i] = nChild
+        }
+        
+    //    let minV = Number.MAX_SAFE_INTEGER
+    //    let lastValue = number[number.length - 1]
+    //    for (let i = 0; i < lastValue.length; i++) {
+    //        minV = minV < lastValue[i] ? minV : lastValue[i]
+    //    }
+        return number[0][0]
+    }
+
+    let num = [
+        [5],
+        [7, 8],
+        [2, 3, 4],
+        [4, 9, 6, 1],
+        [2, 7, 9, 4, 5]]
+    console.log(topToBottom(num))
+    console.log(bottomToTop(num))
     </script>
 </head>
 <body>

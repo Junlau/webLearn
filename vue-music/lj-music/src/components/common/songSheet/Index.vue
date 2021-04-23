@@ -1,6 +1,6 @@
 <template>
     <div class="list">
-        <div class="item" v-for="item in sheetList" :key="item.id">
+        <div class="item" v-for="item in sheetList" :key="item.id" v-on:click="itemClick( item.id )">
             <div class="wrapper">
                 <a>
                     <div class="cover">
@@ -48,6 +48,11 @@ export default {
     },
     mounted () {
         console.log(this.sheetList)
+    },
+    methods: {
+        itemClick (id) {
+            this.$emit('itemClick', id)
+        }
     }
 }
 </script>
