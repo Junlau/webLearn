@@ -111,77 +111,232 @@
 
         console.log(deleteDuplicates(c))
 
-        /*
-            [5],
-           [7, 8],
-          [2, 3, 4],
-        [4, 9, 6, 1],
-       [2, 7, 9, 4, 5]
-        求最上面到最下面的最短路径（数字之和）
-        */
-       //动态规划算法
-       //由上到下
-       var topToBottom = function (triangle) {
-           let number = new Array()
-           number[0] = triangle[0]
-           for (let i = 1; i < triangle.length; i++) {
-               let child = triangle[i]
-               let nChild = new  Array()
-               for (let j = 0; j < child.length; j++) {
-                    if (j === 0) {
-                        nChild.push(child[j] + number[i-1][j])
-                    } else if (j === child.length - 1) {
-                        nChild.push(child[j] + number[i-1][j-1])
-                    } else {
-                        let a = child[j] + number[i-1][j-1]
-                        let b = child[j] + number[i-1][j]
-                        let c = a > b ? b : a
-                        nChild.push(c)
-                    }
-               }
-               number[i] = nChild
-           }
-           
-           let minV = Number.MAX_SAFE_INTEGER
-           let lastValue = number[number.length - 1]
-           for (let i = 0; i < lastValue.length; i++) {
-               minV = minV < lastValue[i] ? minV : lastValue[i]
-           }
-           return minV
-       }
+ // Definition for a Node.
+function Node(val, next, random) {
+    this.val = val;
+    this.next = next;
+    this.random = random;
+};
+ 
+let a1 = new Node(1)
+let c1 = a1
+for (let i = 1; i < 7; i++){
+    let num = i
+    if (i === 3) {
+        num = 2;
+    }
+    if (i > 4) {
+        num = i - 1;
+    }
+    let b = new Node(num + 1)
+    a1.next = b
+    a1 = a1.next
+}
 
-       //由下到上
-       var bottomToTop = function (triangle) {
-           let number = new Array()
-           number[triangle.length - 1] = triangle[triangle.length - 1]
-           for (let i = triangle.length - 2; i >= 0; i--) {
-               let child = triangle[i]
-               let nChild = new  Array()
-               for (let j = 0; j < child.length; j++) {
-                    let a = child[j] + number[i+1][j+1]
-                    let b = child[j] + number[i+1][j]
+
+/**
+ * @param {Node} head
+ * @return {Node}
+ */
+var copyRandomList = function(head) {
+    if (!head) {
+        return head
+    }
+    //不能使用{},因为key不能是对象，默认会把key转为string，可以使用map
+    let hashmap = new Map()
+    let header = head
+    while (head) {
+        let node = new Node(head.val)
+        hashmap.set(head, node)
+        head = head.next
+    }
+
+    let headnew = null
+    let i = 0
+    while (header) {
+        let otherHead = hashmap.get(header)
+        if (i === 0) {
+            headnew = otherHead
+        }
+        if(header.next) {
+            otherHead.next = hashmap.get(header.next)
+        } else {
+            otherHead.next = null
+        }
+        if(header.random) {
+            otherHead.random = hashmap.get(header.next)
+        } else {
+            otherHead.random = null
+        }
+        header = header.next
+        i = i + 1
+    }
+    return headnew
+}
+
+console.log (copyRandomList(c1))
+
+
+//LRU map+双向链表实现
+function DLinkedNode(key,value,next,pre) {
+    this.key = key
+    this.value = value ? value : 0 
+    this.next = next
+    this.pre = pre
+};
+/**
+ * @param {number} capacity
+ */
+var LRUCache = function(capacity) {
+    this.capacity = capacity
+    this.cache = new Map()
+    this.first = new DLinkedNode()
+    this.last = new DLinkedNode()
+    this.first.next = this.last
+    this.last.pre = this.first
+};
+
+/** 
+ * @param {number} key
+ * @return {number}
+ */
+LRUCache.prototype.get = function(key) {
+    if (this.cache.has(key)) {
+        let node = this.cache.get(key)
+        let pre = node.pre
+        let next = node.next
+        pre.next = next
+        next.pre = pre
+
+        node.next = this.first.next
+        this.first.next.pre = node
+        this.first.next = node
+        node.pre = this.first
+        return node.value
+    } 
+    return -1
+};
+
+/** 
+ * @param {number} key 
+ * @param {number} value
+ * @return {void}
+ */
+LRUCache.prototype.put = function(key, value) {
+    if (this.cache.has(key)) {
+        let node = this.cache.get(key)
+        node.value = value
+        let pre = node.pre
+        let next = node.next
+        pre.next = next
+        next.pre = pre
+
+        node.next = this.first.next
+        this.first.next.pre = node
+        this.first.next = node
+        node.pre = this.first
+    } else {
+        let node = new DLinkedNode(key,value)
+        if (this.cache.size >= this.capacity) {
+            //需要删除最后一个
+            let lastNode = this.last.pre
+            let lastPre = lastNode.pre
+            lastPre.next = this.last
+            this.last.pre = lastPre
+            this.cache.delete(lastNode.key)
+        }
+        node.next = this.first.next
+        this.first.next.pre = node
+        this.first.next = node
+        node.pre = this.first
+
+        this.cache.set(key,node)
+    }
+};
+
+ let lru = new LRUCache(2)
+ lru.put(2,1)
+ lru.put(2,2)
+ console.log('--- '+lru.get(1))
+ lru.put(3,3)
+ console.log('--- '+lru.get(2))
+ lru.put(4,4)
+ console.log('--- '+lru.get(1))
+ console.log('--- '+lru.get(3))
+ console.log('--- '+lru.get(4))
+
+
+    /*
+        [5],
+        [7, 8],
+        [2, 3, 4],
+    [4, 9, 6, 1],
+    [2, 7, 9, 4, 5]
+    求最上面到最下面的最短路径（数字之和）
+    */
+    //动态规划算法
+    //由上到下
+    var topToBottom = function (triangle) {
+        let number = new Array()
+        number[0] = triangle[0]
+        for (let i = 1; i < triangle.length; i++) {
+            let child = triangle[i]
+            let nChild = new  Array()
+            for (let j = 0; j < child.length; j++) {
+                if (j === 0) {
+                    nChild.push(child[j] + number[i-1][j])
+                } else if (j === child.length - 1) {
+                    nChild.push(child[j] + number[i-1][j-1])
+                } else {
+                    let a = child[j] + number[i-1][j-1]
+                    let b = child[j] + number[i-1][j]
                     let c = a > b ? b : a
-                    nChild.push(c)  
-               }
-               number[i] = nChild
-           }
-           
-        //    let minV = Number.MAX_SAFE_INTEGER
-        //    let lastValue = number[number.length - 1]
-        //    for (let i = 0; i < lastValue.length; i++) {
-        //        minV = minV < lastValue[i] ? minV : lastValue[i]
-        //    }
-           return number[0][0]
-       }
+                    nChild.push(c)
+                }
+            }
+            number[i] = nChild
+        }
+        
+        let minV = Number.MAX_SAFE_INTEGER
+        let lastValue = number[number.length - 1]
+        for (let i = 0; i < lastValue.length; i++) {
+            minV = minV < lastValue[i] ? minV : lastValue[i]
+        }
+        return minV
+    }
 
-       let num = [
-            [5],
-            [7, 8],
-            [2, 3, 4],
-            [4, 9, 6, 1],
-            [2, 7, 9, 4, 5]]
-        console.log(topToBottom(num))
-        console.log(bottomToTop(num))
+    //由下到上
+    var bottomToTop = function (triangle) {
+        let number = new Array()
+        number[triangle.length - 1] = triangle[triangle.length - 1]
+        for (let i = triangle.length - 2; i >= 0; i--) {
+            let child = triangle[i]
+            let nChild = new  Array()
+            for (let j = 0; j < child.length; j++) {
+                let a = child[j] + number[i+1][j+1]
+                let b = child[j] + number[i+1][j]
+                let c = a > b ? b : a
+                nChild.push(c)  
+            }
+            number[i] = nChild
+        }
+        
+    //    let minV = Number.MAX_SAFE_INTEGER
+    //    let lastValue = number[number.length - 1]
+    //    for (let i = 0; i < lastValue.length; i++) {
+    //        minV = minV < lastValue[i] ? minV : lastValue[i]
+    //    }
+        return number[0][0]
+    }
+
+    let num = [
+        [5],
+        [7, 8],
+        [2, 3, 4],
+        [4, 9, 6, 1],
+        [2, 7, 9, 4, 5]]
+    console.log(topToBottom(num))
+    console.log(bottomToTop(num))
     </script>
 </head>
 <body>
