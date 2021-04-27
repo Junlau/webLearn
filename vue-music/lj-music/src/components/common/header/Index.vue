@@ -16,13 +16,13 @@
                         <router-link :to="{name:'playlist'}" tag="a">歌单</router-link>
                     </li>
                     <li>
-                        <router-link :to="{name:''}" tag="a">歌手</router-link>
+                        <router-link :to="{name:'singer'}" tag="a">歌手</router-link>
                     </li>
-                    <li>
+                    <!-- <li>
                         <router-link :to="{name:''}" tag="a">视频</router-link>
-                    </li>
+                    </li> -->
                     <li>
-                        <router-link :to="{name:''}" tag="a">MV</router-link>
+                        <router-link :to="{name:'mv'}" tag="a">MV</router-link>
                     </li>
                 </ul>
             </div>

@@ -42,6 +42,28 @@ export const appRouter = [
                 component: resolve => {
                     require(['@/views/playlist/Index.vue'], resolve)
                 }
+            },
+            {
+                path: 'singer',
+                meta: {
+                    title: '歌手',
+                    keepAlive: true
+                },
+                name: 'singer',
+                component: resolve => {
+                    require(['@/views/singer/Index.vue'], resolve)
+                }
+            },
+            {
+                path: 'mv',
+                meta: {
+                    title: 'MV',
+                    keepAlive: true
+                },
+                name: 'mv',
+                component: resolve => {
+                    require(['@/views/mv/Index.vue'], resolve)
+                }
             }
         ]
 

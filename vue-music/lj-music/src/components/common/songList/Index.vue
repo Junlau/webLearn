@@ -67,6 +67,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -15px;
+    list-style: none;
 }
 
 .song-item {
