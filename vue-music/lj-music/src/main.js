@@ -10,13 +10,14 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import 'swiper/css/swiper.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import niceLoading from '@/components/common/loading/Index.vue'
 
 Vue.use(ElementUI)
 Vue.use(VueAwesomeSwiper)
 Vue.config.productionTip = false
 Vue.prototype.$api = getApi
 Vue.prototype.utils = utils
-
+Vue.component('niceLoading', niceLoading)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

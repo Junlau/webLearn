@@ -43,6 +43,7 @@ export default {
     flex: 0 0 10%;
     max-width: 10%;
     list-style: none;
+    box-sizing: border-box;
 }
 .singer-item-li .cover{
     position: relative;

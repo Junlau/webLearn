@@ -34,6 +34,9 @@
                 <singer-item v-for="item of singers" :key="item.id" :item="item" />
             </ul>
         </load-more>
+        <div class="load-bottom" v-show="loading">
+            <nice-loading />
+        </div>
     </div>
 </template>
 
@@ -96,7 +99,7 @@ export default {
             // 请求参数
             params: {
                 // 返回数量
-                limit: 40,
+                limit: 30,
                 // 偏移数量
                 offset: 0,
                 // 分类
@@ -141,14 +144,23 @@ export default {
         typeButtonPressed (value) {
             this.lang = value
             this.params.area = value
+            this.getTypeSingerList()
         },
         sexButtonPressed (value) {
             this.classify = value
             this.params.type = value
+            this.getTypeSingerList()
         },
         nameButtonPressed (value) {
             this.en = value
             this.params.initial = value
+            this.getTypeSingerList()
+        },
+        getTypeSingerList () {
+            this.loadStatus = true
+            this.params.offset = 0
+            this.singers = []
+            this.getSingerList()
         },
         async getSingerList () {
             try {
@@ -170,10 +182,10 @@ export default {
         },
         load () {
             if (this.loadStatus) {
-            setTimeout(() => {
-                this.getSingerList()
-            }, 1000)
-      }
+                setTimeout(() => {
+                    this.getSingerList()
+                }, 1000)
+            }
         }
     },
     mounted () {

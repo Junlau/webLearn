@@ -63,3 +63,8 @@ export const getCatList = () => api.get(`/playlist/catlist`, {})
  * @params initial 按首字母索引查找参数, 如 /artist/list?type=1&area=96&initial=b 返回内容将以 name 字段开头为 b 或者拼音开头为 b 为顺序排列, 热门传-1,#传0
  */
 export const getSingerList = params => api.get(`/artist/list`, { params })
+
+/**
+ * @method 获取全部mv
+ */
+ export const getMvAll = params => api.get(`/mv/all`, { params })
