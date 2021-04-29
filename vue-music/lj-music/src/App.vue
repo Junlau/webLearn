@@ -2,7 +2,8 @@
   <div id="app">
     <nice-header></nice-header>
     <router-view></router-view>
-    <!-- <player-bar></player-bar>
+    <player-bar></player-bar>
+    <!--
     <nice-footer></nice-footer>
     <back-top></back-top> -->
   </div>
@@ -10,10 +11,12 @@
 
 <script>
 import NiceHeader from '@/components/common/header/Index'
+import playerBar from '@/components/common/playBar/Index'
 export default {
   name: 'App',
   components: {
-    NiceHeader
+    NiceHeader,
+    playerBar
   }
 }
 </script>

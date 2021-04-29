@@ -18,7 +18,7 @@
         </div>
         <div class="progress-wrap">
             <p class="play-time">01:58</p>
-            <progcess-bar :percent="percent" @percentChange="onPercentBarChange"></progcess-bar>
+            <progress-bar :percent="percent" @percentChange="onPercentBarChange"></progress-bar>
             <p class="all-time">04:58</p>
         </div>
         <div class="volume-wrap">
@@ -27,14 +27,14 @@
                 @click="changeMuted"
                 :class="mutedIcon"
             ></i>
-            <progcess-bar :percent="volumePercent" @percentChange="onVolumePercentBarChange"></progcess-bar>
+            <progress-bar :percent="volumePercent" @percentChange="onVolumePercentBarChange"></progress-bar>
         </div>
         <div class="tool">
             <i class="iconfont" :class="modeIcon" @click="changeMode"></i>
             <i class="iconfont nicegeci32"></i>
             <i class="iconfont nicebofangliebiao24"></i>
         </div>
-        <audio
+        <!-- <audio
             ref="audio"
             :src="currentSong.url"
             @playing="audioReady"
@@ -43,13 +43,13 @@
             @ended="audioEnd"
             @pause="audioPaused"
             :muted="isMuted"
-        ></audio>
+        ></audio> -->
     </div>
 </template>
 
 <script>
-import progressBar from 'components/common/progressBar/Index'
-import { mapGetters, mapMutations } from 'vuex'
+import progressBar from '@/components/common/progressBar/Index'
+// import { mapGetters } from 'vuex'
 export default {
     data () {
         return {
@@ -108,16 +108,17 @@ export default {
         },
         // 进度条
         percent () {
-            return this.currentTime / this.currentSong.duration
-        },
-        ...mapGetters([
-            'playList',
-            'currentSong',
-            'playing',
-            'currentIndex',
-            'mode',
-            'sequenceList'
-        ])
+            return 0
+            // return this.currentTime / this.currentSong.duration
+        }
+        // ...mapGetters([
+        //     'playList',
+        //     'currentSong',
+        //     'playing',
+        //     'currentIndex',
+        //     'mode',
+        //     'sequenceList'
+        // ])
     },
     watch: {
         // 监听歌曲内容变化
@@ -140,4 +141,98 @@ export default {
     align-items: center;
     justify-content: space-between;
 }
+
+.play-bar .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    background: red;
+    font-size: 10px;
+    margin-left: 20px;
+}
+
+.play-bar .avatar img{
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+.play-bar .info {
+    height: 100%;
+    margin-top: 0;
+    margin-left: 30px;
+}
+
+.play-bar .info h2 {
+    color: black;
+    font-size: 14px;
+}
+
+.play-bar .info p {
+    color: #999999;
+    font-size: 12px;
+}
+
+.play-bar .play-btn {
+    height: 100%;
+    margin-top: 0;
+    margin-left: 30px;
+    flex-shrink: 0;
+}
+
+.play-bar .play-btn {
+    height: 100%;
+    margin-top: 0;
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.play-bar .play-btn .icon-prev,.icon-next{
+    font-size: 40px;
+    margin-top: 0;
+    margin-left: 20px;
+}
+
+.play-bar .play-btn .icon-play{
+    font-size: 60px;
+    margin-top: 0;
+    margin-left: 20px;
+}
+
+.play-bar .progress-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 40%;
+}
+
+.play-bar .volume-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 200px;
+    margin-left: 20px;
+}
+
+.play-bar .volume-wrap i {
+    font-size: 30px;
+}
+
+.play-bar .tool {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.play-bar .tool i{
+    font-size: 30px;
+    cursor: pointer;
+}
+
 </style>
