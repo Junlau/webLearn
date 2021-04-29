@@ -20,7 +20,7 @@
                 <i class="arrow"></i>
                 <span>{{ utils.tranNumber(item.playCount, 0) }}</span>
             </div>
-            <div class="action" @mouseover="selectStyle(el)">
+            <div class="action">
                 <button
                     class="play flex-center"
                     title="播放"

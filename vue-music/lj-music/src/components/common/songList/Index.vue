@@ -2,7 +2,13 @@
     <div class="song-list">
         <div class="song-item" v-for="(item, index) in songList" :key="item.id">
             <div class="song-wrapper shadow">
-                <h2 class="number">{{ utils.formatZero(index + 1, 2) }}</h2>
+                <div class="number">
+                    <h2 class="number-index">{{ utils.formatZero(index + 1, 2) }}</h2>
+                    <div class="play-song">
+                        <i class="iconfont nicebofang2 play-btn" v-if="!isplayItem(item)"></i>
+                        <i class="iconfont nicezanting1 pause-btn" v-else></i>
+                    </div>
+                </div>
                 <div class="avatar">
                     <el-image
                     :key="item.picUrl + '?param=300y300'"
@@ -44,12 +50,17 @@ export default {
     data () {
         return {}
     },
+    computed: {
+    },
     props: {
         songList: {
             type: Array
         }
     },
     methods: {
+        isplayItem (item) {
+            return false
+        },
         artistName (item) {
             let name = ''
             item.song.artists.forEach(artist => {
@@ -67,7 +78,6 @@ export default {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -15px;
-    list-style: none;
 }
 
 .song-item {
@@ -88,10 +98,37 @@ export default {
 }
 
 .song-item .number {
-    font-size: 15px;
     color: #000000;
-    margin-right: 30px;
-    margin-left: 30px;
+    text-align: center;
+    width: 80px;
+}
+
+.song-item .number .number-index {
+    display: block;
+    font-size: 15px;
+}
+
+.song-item .play-song {
+    display: none;
+    color: #fa2800;
+}
+
+.song-item .play-song .play-btn {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.song-item .play-song .pause-btn {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.song-wrapper:hover .play-song {
+    display: block;
+}
+
+.song-wrapper:hover .number-index {
+    display: none;
 }
 
 .song-item .avatar {
