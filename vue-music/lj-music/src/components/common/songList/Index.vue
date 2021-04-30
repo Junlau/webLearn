@@ -5,7 +5,7 @@
                 <div class="number">
                     <h2 class="number-index">{{ utils.formatZero(index + 1, 2) }}</h2>
                     <div class="play-song">
-                        <i class="iconfont nicebofang2 play-btn" v-if="!isplayItem(item)"></i>
+                        <i class="iconfont nicebofang2 play-btn" v-if="!isplayItem(item)" @click="playSong(item, index)"></i>
                         <i class="iconfont nicezanting1 pause-btn" v-else></i>
                     </div>
                 </div>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
     data () {
         return {}
@@ -58,6 +59,13 @@ export default {
         }
     },
     methods: {
+        ...mapActions([
+            // 点击选择播放
+            'selectPlay',
+            // 点击播放全部
+            'playAll',
+            'pausePlay'
+        ]),
         isplayItem (item) {
             return false
         },
@@ -68,6 +76,13 @@ export default {
             })
             name = name.substr(1)
             return name
+        },
+        // 播放歌曲
+        playSong (item, index) {
+            this.selectPlay({
+                list: this.songList,
+                index
+            })
         }
     }
 }

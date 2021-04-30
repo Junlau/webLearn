@@ -62,7 +62,7 @@ export default {
             this.$refs.progress.style.width = `${offsetWith}px`
         },
         _triggerPercent () {
-            this.$emit('percentChange', this._getPercent)
+            this.$emit('percentChange', this._getPercent())
         },
         // 计算百分比
         _getPercent () {
@@ -92,6 +92,9 @@ export default {
         percent (newPercent) {
             this.setProgressOffset(newPercent)
         }
+    },
+    mounted () {
+        this.setProgressOffset(this.percent)
     }
 }
 </script>

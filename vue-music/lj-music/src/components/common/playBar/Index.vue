@@ -1,11 +1,11 @@
 <template>
     <div class="play-bar shadow">
         <div class="avatar">
-            <img src="" alt="nicemusic">
+            <img :src="currentSong.picUrl" alt="nicemusic">
         </div>
         <div class="info">
-            <h2>虚构人设</h2>
-            <p>张腾</p>
+            <h2>{{ currentSong.name }}</h2>
+            <p>{{ currentSong.song.artists[0].name }}</p>
         </div>
         <div class="play-btn">
             <i class="iconfont icon-prev niceshangyishou" @click="prevSong"></i>
@@ -17,9 +17,9 @@
             <i class="iconfont icon-next nicexiayishou" @click="nextSong"></i>
         </div>
         <div class="progress-wrap">
-            <p class="play-time">01:58</p>
+            <p class="play-time">{{ formatTime(currentTime) }}</p>
             <progress-bar :percent="percent" @percentChange="onPercentBarChange"></progress-bar>
-            <p class="all-time">04:58</p>
+            <p class="all-time">{{ formatTime(durationTime) }}</p>
         </div>
         <div class="volume-wrap">
             <i
@@ -34,25 +34,26 @@
             <i class="iconfont nicegeci32"></i>
             <i class="iconfont nicebofangliebiao24"></i>
         </div>
-        <!-- <audio
+        <audio
             ref="audio"
-            :src="currentSong.url"
+            :src="audioUrl"
             @playing="audioReady"
             @error="audioError"
             @timeupdate="updateTime"
             @ended="audioEnd"
             @pause="audioPaused"
             :muted="isMuted"
-        ></audio> -->
+        ></audio>
     </div>
 </template>
 
 <script>
 import progressBar from '@/components/common/progressBar/Index'
-// import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
     data () {
         return {
+            songReady: false,
             volumePercent: 0.5,
             isMuted: false,
             currentTime: 0,
@@ -67,11 +68,22 @@ export default {
         progressBar
     },
     methods: {
+        ...mapMutations({
+            setPlayingState: 'SET_PLAYING_STATE',
+            setCurrentIndex: 'SET_CURRENT_INDEX',
+            setPlayMode: 'SET_PLAY_MODE',
+            setPlayList: 'SET_PLAYLIST'
+        }),
         onVolumePercentBarChange (value) {
+            this.volumePercent = value
             this.$refs.audio.volume = value
         },
         onPercentBarChange (value) {
-
+            const currentTime = this.durationTime * value
+            this.currentTime = this.$refs.audio.currentTime = currentTime
+            if (!this.playing) {
+                this.togglePlaying()
+            }
         },
         nextSong () {
 
@@ -80,16 +92,54 @@ export default {
 
         },
         togglePlaying () {
-
+            if (!this.songReady) {
+                return
+            }
+            this.setPlayingState(!this.playing)
         },
         changeMode () {
         },
         changeMuted () {
             this.isMuted = !this.isMuted
             this.$refs.audio.muted = this.isMuted
+        },
+        // 格式化时间
+        formatTime (interval) {
+            interval = interval | 0
+            const m = (interval / 60) | 0
+            const s = interval % 60
+            return `${this.utils.formatZero(m, 2)}:${this.utils.formatZero(s, 2)}`
+        },
+        audioReady () {
+            console.log('准备')
+            clearTimeout(this.timer)
+            this.songReady = true
+        },
+        audioError () {
+            console.log('错误')
+            clearTimeout(this.timer)
+            this.songReady = true
+        },
+        updateTime (e) {
+            this.currentTime = e.target.currentTime
+        },
+        audioEnd () {
+            this.currentTime = 0
+            this.nextSong()
+        },
+        audioPaused () {
+            this.setPlayingState(false)
         }
     },
     computed: {
+        ...mapGetters([
+            'playList',
+            'currentSong',
+            'playing',
+            'currentIndex',
+            'mode',
+            'sequenceList'
+        ]),
         // 播放暂停按钮
         playIcon () {
             return this.playing ? 'nicezanting1' : 'nicebofang2'
@@ -108,20 +158,55 @@ export default {
         },
         // 进度条
         percent () {
-            return 0
-            // return this.currentTime / this.currentSong.duration
+            return this.currentTime / this.durationTime
+        },
+        audioUrl () {
+            console.log(this.currentSong.id)
+            return 'https://music.163.com/song/media/outer/url?id=' + this.currentSong.id + '.mp3'
+        },
+        durationTime () {
+            return this.currentSong.song.duration / 1000
         }
-        // ...mapGetters([
-        //     'playList',
-        //     'currentSong',
-        //     'playing',
-        //     'currentIndex',
-        //     'mode',
-        //     'sequenceList'
-        // ])
     },
     watch: {
-        // 监听歌曲内容变化
+        // 监听播放状态
+        playing (isPlaying) {
+            if (!this.songReady) {
+                return
+            }
+            this.$nextTick(() => {
+                console.log(isPlaying)
+                const audio = this.$refs.audio
+                if (audio) {
+                    isPlaying ? audio.play() : audio.pause()
+                }
+            })
+        },
+        currentSong (newSong, oldSong) {
+            if (!newSong.id || newSong.id === oldSong.id) {
+                return
+            }
+            this.songReady = false
+            this.$nextTick(() => {
+                const audio = this.$refs.audio
+                if (audio) {
+                    audio.src = 'https://music.163.com/song/media/outer/url?id=' + newSong.id + '.mp3'
+                    audio.volume = this.volumePercent
+                    audio.play()
+                    this.id = newSong.id
+                }
+            })
+            // 若歌曲 5s 未播放，则认为超时，修改状态确保可以切换歌曲。
+            clearTimeout(this.timer)
+                this.timer = setTimeout(() => {
+                this.songReady = true
+            }, 5000)
+        }
+    },
+    mounted () {
+        this.$nextTick(() => {
+            this.$refs.audio.play()
+        })
     }
 }
 </script>
@@ -193,12 +278,14 @@ export default {
     font-size: 40px;
     margin-top: 0;
     margin-left: 20px;
+    cursor: pointer;
 }
 
 .play-bar .play-btn .icon-play{
     font-size: 60px;
     margin-top: 0;
     margin-left: 20px;
+    cursor: pointer;
 }
 
 .play-bar .progress-wrap {
@@ -220,6 +307,7 @@ export default {
 
 .play-bar .volume-wrap i {
     font-size: 30px;
+    cursor: pointer;
 }
 
 .play-bar .tool {
