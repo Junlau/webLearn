@@ -23,6 +23,7 @@ export default {
   width: auto;
   min-width: 1024px;
   padding-top: 70px;
+  padding-bottom: 72px;
 }
 .fluid {
     padding: 20px 0;

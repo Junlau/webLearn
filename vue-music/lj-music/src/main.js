@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import getApi from '@/api/index'
 import utils from '@/utils/utils'
 import ElementUI from 'element-ui'
@@ -22,6 +23,7 @@ Vue.component('niceLoading', niceLoading)
 new Vue({
   el: '#app',
   router,
+  store,
   ElementUI,
   components: { App },
   template: '<App/>'
